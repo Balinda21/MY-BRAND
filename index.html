@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    <div class="">
+        <header>
+            <h3 class="farmie">
+              <span class="far">Mau</span>rice.
+            </h3>
+            <nav class="nav">
+              <a href="">Home</a>
+              <a href="about.html">About</a>
+              <a href="#Services">Services</a>
+              <a href="projects.html">Projects</a>
+              <a href="blogs.html">Blog</a>
+              <a href="contact.html">Contact</a>
+            </nav>            
+            <a href="admindashboard.html" class="login_button">
+              Login
+            </a>
+            <button id="nav-toggle" class="nav-btn">
+              <i class="fa fa-bars"></i>
+            </button>
+            
+          </header>
+          
+      </div>
+      <!--Hero section-->
+      <div class="hero_section">      
+     <h3>I’m Maurice, a passionate<br> 
+    developer from Rwanda.</h3>
+    <div class="hero-btns">
+        <button class="hire-btn">Hire me</button>
+        <button class="portfolio-btn">Portfolio</button>
+    </div>
+    <div class="socials">
+        <i class="fa-solid fa-basketball"></i>
+    </div>
+      </div>
+      <!--end of hero section-->
+      <div class="main-content">
+        <h2 class="approach">Our skills-your results</h2>
+
+        <div class="personalize">
+            <img src="./images/computer.png" alt="">
+            <h3>Personalize Approach</h3><br>
+            <span>Our experience gives us the possibility  to provide optimal solution of your ideas.
+                We explore your requests to prepare  a web solution specifically  for your needs
+            </span>       
+
+        </div><br>
+
+        <div class="Services-section">
+        <h2 class="services">SERVICES</h2><br>
+        <span>This is My Expertise, The<br> 
+            Services I'll Provide My Clients</span>
+            <div class="cards-holder">
+                <div class="development">
+                    <img src="./images/computer.png" alt="">
+                    <h3>Development</h3>
+                    <span>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</span>
+                </div>  
+            
+                <div class="development">
+                    <img src="./images/ux.png" alt="">
+                    <h3>UI /UX</h3>
+                    <span>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</span>
+                </div>  
+            
+                <div class="development">
+                    <img src="./images/color-palette.png" alt="">
+                    <h3>Design</h3>
+                    <span>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</span>
+                </div>  
+            </div>
+        </div><br>
+
+        <!--TESTIMONIALS-->
+        <div class="testmonial-holder">
+        <h3>CLIENTS SAY ABOUT US?</h3><br>
+
+        
+        <div class="testimonials-cards">
+            <div class="testimonial-card">
+                <span>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</span>
+                <div class="testimonial-info">
+                    <img src="./images//woman.jpg" alt="">
+                    <span class="name">Angel Balinda</span>
+                    <span class="occupation">Business Owner</span>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <span>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</span>
+                <div class="testimonial-info">
+                    <img src="./images/man.jpg" alt="">
+                    <span class="name">Rick Rwigema</span>
+                    <span class="occupation">Business Owner</span>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <span>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</span>
+                <div class="testimonial-info">
+                    <img src="./images/man.jpg" alt="">
+                    <span class="name">Alec Botman</span>
+                    <span class="occupation">Business Owner</span>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="scroll-to-top">
+        <a href="#" class="scroll-btn">
+          <i class="fa fa-arrow-up"></i>
+        </a>
+      </div>
+      <footer class="footer">
+        <div class="footer-content">
+            <div class="email">
+                <p>balindamoris@gmail.com</p>
+            </div>
+            <div class="social-media">
+                <a href="#" class="social-icon"><i class="fa fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="fa fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fa fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var scrollButton = document.querySelector(".scroll-btn");
+  
+    window.addEventListener("scroll", function() {
+      if (window.scrollY > 300) {
+        scrollButton.style.display = "block";
+      } else {
+        scrollButton.style.display = "none";
+      }
+    });
+  
+    scrollButton.addEventListener("click", function() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  });
+</script>

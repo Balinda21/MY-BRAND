@@ -1,0 +1,70 @@
+
+.projects-container {
+    padding-top: 3rem;
+    width: 100%;
+    height: 80vh;
+    padding: 50px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px; 
+}
+
+.profile {
+    width: 100%;
+    height: 60%; 
+}
+
+.profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.about-me-content {
+    padding: 20px; 
+    background-color: white; 
+    height: 60%;
+}
+
+.about-me-content h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.about-me-content span {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.about-me-content strong {
+    font-weight: bold;
+}
+
+@media screen and (min-width: 768px) {
+    .projects-container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media(max-width : 860px){
+    .projects-section{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .projects-container{
+        display: grid;
+        grid-template-columns: 1fr;
+        height: 60vh;
+        column-gap: 5rem;
+    }
+    .container-1{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+        gap: 20rem;
+
+    }
+    .footer{
+        display: none;
+    }
+}
