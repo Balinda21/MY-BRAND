@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Queries</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            background-image: url(./images/hero1.jpg);
+        }
+        .header-options{
+            display: flex;
+            justify-content: space-between;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+      .container a{
+        text-decoration: none;
+        color: red;
+        font-weight: bold;
+      }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+           
+        }
+        .query {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+        .query:last-child {
+            margin-bottom: 0;
+        }
+        .query-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .name {
+            font-weight: bold;
+            color: green;
+        }
+        .email {
+            color: #666;
+        }
+        .title {
+            font-weight: bold;
+            color: #333;
+        }
+        .description {
+            color: #666;
+            margin-top: 5px;
+        }
+        .question {
+            margin-top: 10px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-options"><h1>Queries </h1>
+            <a href="admindashboard.html">exit</a></div>
+        
+        <div class="query">
+            <div class="query-header">
+                <div>
+                    <span class="name">Musinga Bertrand</span>
+                    <span class="email">&lt;bertrand@gmail.com&gt;</span>
+                </div>
+            </div>
+            <div class="title">Password</div>
+            <div class="question">How can I change my account password?</div>
+            <div class="description">I want to change my password because i forgot the one is used before</div>
+        </div>
+        <div class="query">
+            <div class="query-header">
+                <div>
+                    <span class="name">Jane Smith</span>
+                    <span class="email">&lt;jane@example.com&gt;</span>
+                </div>
+            </div>
+            <div class="title">Price</div>
+            <div class="question">I want personal website</div>
+            <div class="description">I would like you to build an ecommerce website for me and how much does it take,and What are the payment options available? </div>
+        </div>
+        <!-- Add more queries as needed -->
+    </div>
+</body>
+</html>
