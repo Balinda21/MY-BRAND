@@ -103,7 +103,7 @@ label #cancel{
 .card-holder{
   width: 50%;
   height: 30vh;
-  /* background-color: black; */
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
@@ -132,13 +132,13 @@ label #cancel{
 
 }
 .Delete{
-  display: inline-block;
+
     padding: 8px 16px;
     background-color: brown;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s;
+
 }
 @media(max-width : 860px){
   .sidebar{
