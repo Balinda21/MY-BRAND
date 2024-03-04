@@ -3,43 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Blog Post</title>
   
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="blogs.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+      
+        .blog-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 0;
+        }
+
+        .blog-card {
+            max-width: 600px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h2 {
+            margin-top: 0;
+        }
+
+        .card-date {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .read-more {
+            color: #007bff;
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+        }
+        .like-comment-section {
+            margin-top: 20px;
+        }
+
+        .like-btn,
+        .comment-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .comment-section {
+            margin-top: 20px;
+        }
+
+        .comment-section h3 {
+            margin-bottom: 10px;
+        }
+
+        .comment {
+            margin-bottom: 10px;
+        }
+
+        /* Style for comment form */
+        .comment-form input,
+        .comment-form textarea,
+        .comment-form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .comment-form textarea {
+            resize: vertical;
+        }
+
+        .comment-form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .comment-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div>
+    <div class="">
         <header>
-          <h3 class="farmie">
-            <span class="far">Mau</span>rice
-          </h3>
-          <nav class="nav">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="">Services</a>
-            <a href="projects.html">Projects</a>
-            <a href="blogs.html">Blog</a>
-            <a href="contact.html">Contact</a>
-          </nav>            
-         <a href="admindashboard.html"><button class="login_button" >
-            Login
-          </button></a>
-          <button class="nav-btn" >
-            <FaBars />
-          </button>
-        </header>
+            <h3 class="farmie">
+              <span class="far">Mau</span>rice.
+            </h3>
+            <nav class="nav">
+              <a href="">Home</a>
+              <a href="about.html">About</a>
+              <a href="#Services">Services</a>
+              <a href="projects.html">Projects</a>
+              <a href="blogs.html">Blog</a>
+              <a href="contact.html">Contact</a>
+            </nav>            
+            <a href="login.html" class="login_button">
+              Login
+            </a>
+            <button id="nav-toggle" class="nav-btn">
+              <i class="fa fa-bars"></i>
+            </button>
+            
+          </header>
+          
       </div>
-      <!--Hero section-->
-      <div class="hero_section">      
-     <h3>BLOGS</h3>
-      </div>
-     
-      <div class="blog-cards-container">
+    <!-- Blog section -->
+    <div class="blog-section">
         <div class="blog-card">
             <img src="./images/ai.jpg" alt="Blog Image">
             <div class="card-content">
@@ -51,37 +140,26 @@
                     <button class="like-btn">Like</button>
                     <button class="comment-btn">Comment</button>
                 </div>
-            </div>
-        </div>
-        <div class="blog-card">
-            <img src="./images/javascript.jpg" alt="Blog Image">
-            <div class="card-content">
-                <h2>Javascript</h2>
-                <span class="card-date">January 1, 2022</span>
-                <p>versatility and ease of use have led to its widespread adoption across various domains.</p>
-                <a href="#" class="read-more">Read More</a>
-                <div class="like-comment-section">
-                    <button class="like-btn">Like</button>
-                    <button class="comment-btn">Comment</button>
-                </div>
-            </div>
-        </div>
-        <div class="blog-card">
-            <img src="./images/web.jpg" alt="Blog Image">
-            <div class="card-content">
-                <h2>Become Developer</h2>
-                <span class="card-date">January 1, 2022</span>
-                <p>Becoming a developer can be an exciting and rewarding journey, but it requires dedication.</p>
-                <a href="#" class="read-more">Read More</a>
-                <div class="like-comment-section">
-                    <button class="like-btn">Like</button>
-                    <button class="comment-btn">Comment</button>
+                <!-- Comment section -->
+                <div class="comment-section">
+                    <h3>Comments</h3>
+                    <div class="comment">
+                        <p>Ishimwe kevin: This is a great article!</p>
+                    </div>
+                    <div class="comment">
+                        <p>Gisa Emely: Thanks for sharing this valuable information.</p>
+                    </div>
+                    <!-- Add comment form -->
+                    <form class="comment-form">
+                        <input type="text" placeholder="Your name">
+                        <textarea placeholder="Your comment"></textarea>
+                        <button type="submit">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-         
-    </div>
+
     <footer class="footer">
         <div class="footer-content">
             <div class="email">
@@ -94,7 +172,15 @@
             </div>
         </div>
     </footer>
-    
-      
 </body>
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var navToggle = document.getElementById("nav-toggle");
+        var navMenu = document.querySelector(".nav");
+  
+        navToggle.addEventListener("click", function() {
+            navMenu.classList.toggle("active");
+        });
+    });
+  </script>
