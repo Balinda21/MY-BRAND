@@ -85,4 +85,28 @@
     </div>
 </body>
 </html>
-<script src="script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const signupForm = document.getElementById('signup-form');
+
+    signupForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('signup-username').value;
+        const password = document.getElementById('signup-password').value;
+        const userType = document.getElementById('signup-usertype').value;
+
+        // Check if user already exists
+        if (localStorage.getItem(username)) {
+            alert('Username already exists! Please choose another one.');
+        } else {
+            // Store username, password, and user type in local storage
+            localStorage.setItem(username, JSON.stringify({password: password, userType: userType}));
+            alert('Signup successful! Please login.');
+        }
+
+        // Clear form fields
+        signupForm.reset();
+    });
+});
+
+</script>
