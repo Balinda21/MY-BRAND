@@ -411,7 +411,6 @@ nav a.active {
         margin: 0;
         width: 40%;
       
-        
     }
     .nav a:hover{
       color: var(--fill-color);
