@@ -29,7 +29,7 @@
             margin-bottom: 20px;
             color: #333;
         }
-        input[type="email"],
+        input[type="username"],
         input[type="password"] {
             width: 100%;
             padding: 12px;
@@ -84,10 +84,15 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form id="loginForm" action="admindashboard.html" method="post">
-            <input type="email" name="email" placeholder="Email" required>
+        <form id="loginForm">
+            <input type="Username" name="username" placeholder="username" required>
             <input type="password" name="password" placeholder="Password" required>
+            <select name="login-usertype" id="">
+                <option value="user">user</option>
+                <option value="admin">Admin</option>
+            </select>
             <input type="submit" value="Login">
+           
         </form>
         <div class="signup-link">
             <span>Don't have an account? </span><a href="signup.html">Sign up here</a>
