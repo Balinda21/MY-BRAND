@@ -114,6 +114,7 @@
                 const userData = JSON.parse(localStorage.getItem(username));
                 if (userData && userData.password === password) {
                     alert('Login successful!');
+                    window.location.href = 'index.html';
                 } else {
                     alert('Invalid username or password!');
                 }
