@@ -102,6 +102,7 @@
             // Store username, password, and user type in local storage
             localStorage.setItem(username, JSON.stringify({password: password, userType: userType}));
             alert('Signup successful! Please login.');
+            window.location.href = 'login.html';
         }
 
        
