@@ -86,14 +86,12 @@
         <h2>Login</h2>
         <form id="login-form">
             <input type="text" name="login-username" id="login-username" placeholder="Username" required>
-
-            <input type="password" name="login-password" id="login-password" placeholder="Password" required>  
-            <select name="" id="">
-                <option value="">user</option>
-                <option value="">Admin</option>
-            </select>  
+            <input type="password" name="login-password" id="login-password" placeholder="Password" required>
+            <select name="user-type" id="user-type">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
             <input type="submit" value="Login">       
-                   
         </form>
         <div class="signup-link">
             <span>Don't have an account? </span><a href="signup.html">Sign up here</a>
@@ -109,14 +107,21 @@
                 event.preventDefault();
                 const username = document.getElementById('login-username').value;
                 const password = document.getElementById('login-password').value;
+                const userType = document.getElementById('user-type').value;
 
                 // Check if username exists in local storage and password matches
                 const userData = JSON.parse(localStorage.getItem(username));
-                if (userData && userData.password === password) {
-                    alert('Login successful!');
-                    window.location.href = 'index.html';
+                if (userData && userData.password === password && userData.userType === userType) {
+                    
+                    if (userType === 'user') {
+                        alert('Login successful!');
+                        window.location.href = 'index.html';
+                    } else if (userType === 'admin') {
+                        alert('Welcome back Admin');
+                        window.location.href = 'admindashboard.html';
+                    }
                 } else {
-                    alert('Invalid username or password!');
+                    alert('Invalid username, password, or user type!');
                 }
 
                 // Clear form fields
