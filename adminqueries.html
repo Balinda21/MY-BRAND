@@ -27,25 +27,31 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-      .container a{
-        text-decoration: none;
-        color: red;
-        font-weight: bold;
-      }
+        .container a{
+            text-decoration: none;
+            color: red;
+            font-weight: bold;
+        }
         h1 {
             text-align: center;
             margin-bottom: 20px;
-           
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f9f9f9;
+            font-weight: bold;
         }
         .query {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 20px;
             margin-bottom: 20px;
-            background-color: #f9f9f9;
-        }
-        .query:last-child {
-            margin-bottom: 0;
         }
         .query-header {
             display: flex;
@@ -76,32 +82,42 @@
 </head>
 <body>
     <div class="container">
-        <div class="header-options"><h1>Queries </h1>
-            <a href="admindashboard.html">exit</a></div>
+        <div class="header-options">
+            <h1>Queries</h1>
+            <a href="admindashboard.html">Exit</a>
+        </div>
         
-        <div class="query">
-            <div class="query-header">
-                <div>
-                    <span class="name">Musinga Bertrand</span>
-                    <span class="email">&lt;bertrand@gmail.com&gt;</span>
-                </div>
-            </div>
-            <div class="title">Password</div>
-            <div class="question">How can I change my account password?</div>
-            <div class="description">I want to change my password because i forgot the one is used before</div>
-        </div>
-        <div class="query">
-            <div class="query-header">
-                <div>
-                    <span class="name">Jane Smith</span>
-                    <span class="email">&lt;jane@example.com&gt;</span>
-                </div>
-            </div>
-            <div class="title">Price</div>
-            <div class="question">I want personal website</div>
-            <div class="description">I would like you to build an ecommerce website for me and how much does it take,and What are the payment options available? </div>
-        </div>
-        <!-- Add more queries as needed -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th> 
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody id="queries-container"></tbody>
+        </table>
     </div>
+
+    <script>
+         document.addEventListener("DOMContentLoaded", function() {
+            const contactData = JSON.parse(localStorage.getItem('contactData'));
+            const tbody = document.getElementById('queries-container');
+
+            if (contactData) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${contactData.name}</td>
+                    <td>${contactData.email}</td>
+                    <td>${contactData.subject}</td>
+                    <td>${contactData.message}</td>
+                `;
+                tbody.appendChild(row);
+            } else {
+                tbody.innerHTML = '<tr><td colspan="4">No queries available</td></tr>';
+            }
+        });
+    </script>
 </body>
 </html>
