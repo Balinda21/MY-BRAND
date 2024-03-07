@@ -90,10 +90,10 @@
         <table>
             <thead>
                 <tr>
+                    <th>Name</th>
                     <th>Email</th>
+                    <th>Subject</th> 
                     <th>Message</th>
-                    <th>Name</th> 
-                    <th>Subject</th>
                 </tr>
             </thead>
             <tbody id="queries-container"></tbody>
@@ -108,10 +108,10 @@
             if (contactData) {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${contactData.email}</td>
-                    <td>${contactData.message}</td>
                     <td>${contactData.name}</td>
+                    <td>${contactData.email}</td>
                     <td>${contactData.subject}</td>
+                    <td>${contactData.message}</td>
                 `;
                 tbody.appendChild(row);
             } else {
