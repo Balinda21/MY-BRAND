@@ -89,4 +89,35 @@
           navMenu.classList.toggle("active");
       });
   });
+
+  document.addEventListener("DOMContentLoaded", function() {
+      var navToggle = document.getElementById("nav-toggle");
+      var navMenu = document.querySelector(".nav");
+
+      navToggle.addEventListener("click", function() {
+          navMenu.classList.toggle("active");
+      });
+
+      var form = document.querySelector("form");
+      form.addEventListener("submit", function(event) {
+          event.preventDefault();
+
+          var name = document.querySelector("input[name='name']").value;
+          var email = document.querySelector("input[name='email']").value;
+          var subject = document.querySelector("input[name='subject']").value;
+          var message = document.querySelector("textarea[name='message']").value;
+
+          var contactData = {
+              name: name,
+              email: email,
+              subject: subject,
+              message: message
+          };
+
+          localStorage.setItem("contactData", JSON.stringify(contactData));
+
+          
+      });
+  });
+  
 </script>
