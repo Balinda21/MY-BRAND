@@ -109,7 +109,7 @@
                 const password = document.getElementById('login-password').value;
                 const userType = document.getElementById('user-type').value;
 
-                // Check if username exists in local storage and password matches
+       
                 const userData = JSON.parse(localStorage.getItem(username));
                 if (userData && userData.password === password && userData.userType === userType) {
                     
@@ -124,7 +124,7 @@
                     alert('Invalid username, password, or user type!');
                 }
 
-                // Clear form fields
+              
                 loginForm.reset();
             });
         });
