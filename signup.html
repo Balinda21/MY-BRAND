@@ -73,7 +73,7 @@
         <form id="signup-form">
             <input type="text" id="signup-username" placeholder="Username" required>
             <input type="password" id="signup-password" placeholder="Password" required>
-            <select id="signup-usertype">
+            <select id="signup-role">
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
             </select>
@@ -93,14 +93,14 @@
         event.preventDefault();
         const username = document.getElementById('signup-username').value;
         const password = document.getElementById('signup-password').value;
-        const userType = document.getElementById('signup-usertype').value;
+        const role = document.getElementById('signup-role').value;
 
         
         if (localStorage.getItem(username)) {
             alert('Username already exists! Please choose another one.');
         } else {
             
-            localStorage.setItem(username, JSON.stringify({password: password, userType: userType}));
+            localStorage.setItem(username, JSON.stringify({password: password, role: role}));
             alert('Signup successful! Please login.');
             window.location.href = 'login.html';
         }
