@@ -141,13 +141,9 @@
                 </div>
                 <!-- Comment section -->
                 <div class="comment-section">
-                    <h3>Comments</h3>
-                    <div class="comment">
-                        <p>Ishimwe kevin: This is a great article!</p>
-                    </div>
-                    <div class="comment">
-                        <p>Gisa Emely: Thanks for sharing this valuable information.</p>
-                    </div>
+                    <h3>Leave a Comments</h3>
+                    
+                    
                     <!-- Add comment form -->
                     <form class="comment-form">
                         <input type="text" placeholder="Your name">
@@ -182,4 +178,54 @@
             navMenu.classList.toggle("active");
         });
     });
+
+       document.addEventListener("DOMContentLoaded", function() {
+            // Function to add comment to the UI
+            function addComment(comment) {
+                var commentSection = document.querySelector(".comment-section");
+                var commentDiv = document.createElement("div");
+                commentDiv.classList.add("comment");
+                commentDiv.innerHTML = "<p>" + comment + "</p>";
+                commentSection.appendChild(commentDiv);
+            }
+
+            // Function to handle form submission
+            document.querySelector(".comment-form").addEventListener("submit", function(event) {
+                event.preventDefault();
+                var nameInput = document.querySelector(".comment-form input[type='text']");
+                var commentInput = document.querySelector(".comment-form textarea");
+                var name = nameInput.value.trim();
+                var comment = commentInput.value.trim();
+
+                if (name !== "" && comment !== "") {
+                    var newComment = name + ": " + comment;
+                    addComment(newComment);
+
+                    // Store comment in local storage
+                    var comments = localStorage.getItem("comments");
+                    if (!comments) {
+                        comments = [];
+                    } else {
+                        comments = JSON.parse(comments);
+                    }
+                    comments.push(newComment);
+                    localStorage.setItem("comments", JSON.stringify(comments));
+
+                    // Clear input fields
+                    nameInput.value = "";
+                    commentInput.value = "";
+                } else {
+                    alert("Please fill in all fields.");
+                }
+            });
+
+            // Load comments from local storage
+            var savedComments = localStorage.getItem("comments");
+            if (savedComments) {
+                savedComments = JSON.parse(savedComments);
+                savedComments.forEach(function(comment) {
+                    addComment(comment);
+                });
+            }
+        });
   </script>
