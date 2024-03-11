@@ -51,6 +51,8 @@
         }
         .like-comment-section {
             margin-top: 20px;
+            display: flex;
+            gap: 20px;
         }
 
         .like-btn,
@@ -101,6 +103,9 @@
         .comment-form button:hover {
             background-color: #0056b3;
         }
+        .liked {
+    filter: invert(37%) sepia(95%) saturate(2526%) hue-rotate(332deg) brightness(101%) contrast(105%);
+}
     </style>
 </head>
 <body>
@@ -136,8 +141,9 @@
                 <span class="card-date">January 1, 2022</span>
                 <p>AI is a tool created and controlled by humans. While AI technologies continue to advance rapidly and play </p>
                 <div class="like-comment-section">
-                    <button class="like-btn">Like</button>
-                    <button class="comment-btn">Comment</button>
+                    <i><img id="likeIcon" src="./images/heart.png" alt="" style="width: 20px; cursor: pointer;" onclick="like()"></i>
+                   
+                    
                 </div>
                 <!-- Comment section -->
                 <div class="comment-section">
@@ -228,4 +234,26 @@
                 });
             }
         });
+
+        // Function to handle liking
+function like() {
+    var likeIcon = document.getElementById("likeIcon");
+    
+    // Toggle color class
+    likeIcon.classList.toggle("liked");
+    
+    // Store like state in local storage
+    var liked = likeIcon.classList.contains("liked");
+    localStorage.setItem("liked", liked);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Restore like state from local storage
+    var liked = localStorage.getItem("liked");
+    var likeIcon = document.getElementById("likeIcon");
+
+    if (liked === "true") {
+        likeIcon.classList.add("liked");
+    }
+});
   </script>
