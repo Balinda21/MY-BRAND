@@ -14,7 +14,7 @@
   <div class="modal">
     <label for="modal-toggle" class="modal-close"><button><a href="admindashboard.html">X</a></button></label>
     <h2>Add Blog</h2>
-    <form class="modal-form" enctype="multipart/form-data">
+    <form class="modal-form" enctype="multipart/form-data" id="blog-form">
       <div class="form-group">
         <label for="picture">Picture:</label>
         <input type="file" id="picture" name="picture" accept="image/*" required>
@@ -24,20 +24,92 @@
         <input type="text" id="title" name="title" required>
       </div>
       <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" rows="4" required></textarea>
-      </div>
-      <div class="form-group">
         <label for="date">Date:</label>
         <input type="date" id="date" name="date" required>
       </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+      </div>
+      
       <div class="form-group form-actions">
         <button type="submit">Submit</button>
-    
       </div>
     </form>
   </div>
 </div>
+
+<div id="blog-cards" class="blog-cards"></div>
+
+<script>
+  // Function to handle form submission
+  document.getElementById('blog-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Retrieve form data
+    var formData = new FormData(this);
+    var blogData = {};
+    formData.forEach(function(value, key) {
+      blogData[key] = value;
+    });
+
+    // Store form data in local storage
+    var blogs = localStorage.getItem('blogs') ? JSON.parse(localStorage.getItem('blogs')) : [];
+    blogs.push(blogData);
+    localStorage.setItem('blogs', JSON.stringify(blogs));
+
+    // Reset form
+    this.reset();
+
+    // Update blog cards
+    updateBlogCards();
+  });
+
+  // Function to generate HTML for blog post cards
+  function generateBlogCard(blog) {
+    var card = document.createElement('div');
+    card.classList.add('blog-card');
+
+    var image = document.createElement('img');
+    image.src = URL.createObjectURL(blog.picture);
+    image.alt = 'Blog Picture';
+    card.appendChild(image);
+
+    var content = document.createElement('div');
+    content.classList.add('card-content');
+
+    var title = document.createElement('h2');
+    title.textContent = blog.title;
+    content.appendChild(title);
+
+    var date = document.createElement('span');
+    date.classList.add('card-date');
+    date.textContent = blog.date;
+    content.appendChild(date);
+
+    var description = document.createElement('p');
+    description.textContent = blog.description;
+    content.appendChild(description);
+
+    card.appendChild(content);
+
+    document.getElementById('blog-cards').appendChild(card);
+  }
+
+  // Function to update blog cards from local storage
+  function updateBlogCards() {
+    var blogCardsContainer = document.getElementById('blog-cards');
+    blogCardsContainer.innerHTML = '';
+
+    var blogs = localStorage.getItem('blogs') ? JSON.parse(localStorage.getItem('blogs')) : [];
+    blogs.forEach(function(blog) {
+      generateBlogCard(blog);
+    });
+  }
+
+  // Call updateBlogCards initially to load existing blogs
+  updateBlogCards();
+</script>
 
 </body>
 </html>
