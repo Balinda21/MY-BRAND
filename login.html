@@ -99,35 +99,31 @@
         <button class="google-signin-button">Sign in with Google</button>
     </div>
 <!--JS SECTION-->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginForm = document.getElementById('login-form');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.getElementById('login-form');
 
-            loginForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const username = document.getElementById('login-username').value;
-                const password = document.getElementById('login-password').value;
-                const userType = document.getElementById('user-type').value;
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const userType = document.getElementById('user-type').value;
 
-       
-                const userData = JSON.parse(localStorage.getItem(username));
-                if (userData && userData.password === password && userData.userType === userType) {
-                    
-                    if (userType === 'user') {
-                        alert('Login successful!');
-                        window.location.href = 'index.html';
-                    } else if (userType === 'admin') {
-                        alert('Welcome back Admin');
-                        window.location.href = 'admindashboard.html';
-                    }
-                } else {
-                    alert('Invalid username, password, or user type!');
+            const userData = JSON.parse(localStorage.getItem(username));
+            if (userData && userData.password === password && userData.role === userType) {
+                if (userType === 'user') {
+                    alert('Login successful!');
+                    window.location.href = 'index.html';
+                } else if (userType === 'admin') {
+                    alert('Welcome back Admin');
+                    window.location.href = 'admindashboard.html';
                 }
-
-              
-                loginForm.reset();
-            });
+                loginForm.reset(); // Reset the form after successful login
+            } else {
+                alert('Invalid username, password, or user type!');
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>
