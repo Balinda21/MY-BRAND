@@ -170,28 +170,31 @@
 
   </script>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-      const loginButton = document.querySelector(".login_button");
+ 
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginButton = document.querySelector(".login_button");
 
-      if (loginButton) {
-          const isLoggedIn = localStorage.getItem("isLoggedIn");
+        if (loginButton) {
+            const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-          if (isLoggedIn === "true") {
-              // If user is logged in, show logout button
-              loginButton.textContent = "Logout";
-              loginButton.addEventListener("click", function() {
-                  localStorage.setItem("isLoggedIn", "false"); // Set isLoggedIn to false
-                  window.location.href = "login.html"; // Redirect to login page
-              });
-          } else {
-              // If user is not logged in, show login button
-              loginButton.textContent = "Login";
-              loginButton.href = "login.html"; // Update href attribute with login page URL
-          }
-      } else {
-          console.error("Login button not found!");
-      }
-  });
+            if (isLoggedIn === "true") {
+                // If user is logged in, show logout button
+                loginButton.textContent = "Logout";
+                loginButton.addEventListener("click", function() {
+                    localStorage.setItem("isLoggedIn", "false"); // Set isLoggedIn to false
+                    window.location.href = "login.html"; // Redirect to login page
+                });
+            } else {
+                // If user is not logged in, show login button
+                loginButton.textContent = "Login";
+                loginButton.href = "login.html"; // Update href attribute with login page URL
+            }
+        } else {
+            console.error("Login button not found!");
+        }
+    });
+</script>
+
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
