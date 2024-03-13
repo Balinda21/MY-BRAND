@@ -24,9 +24,7 @@
               <a href="blogs.html">Blog</a>
               <a href="contact.html">Contact</a>
             </nav>            
-            <a href="login.html" id="login-btn" class="login_button">
-              Login
-            </a>
+            <a href="#" id="login-btn" class="login_button">Login</a>
             <button id="nav-toggle" class="nav-btn">
               <i class="fa fa-bars"></i>
             </button>
@@ -135,77 +133,40 @@
     </footer>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-          const loginForm = document.getElementById('login-form');
-          const loginBtn = document.getElementById('login-btn'); // Reference the login button by its ID
+        document.addEventListener("DOMContentLoaded", function() {
+            const loginButton = document.getElementById("login-btn");
 
-          if (loginForm) {
-              loginForm.addEventListener('submit', function(event) {
-                  event.preventDefault();
-                  const username = document.getElementById('login-username').value;
-                  const password = document.getElementById('login-password').value;
-                  const userType = document.getElementById('user-type').value;
+            if (loginButton) {
+                const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-                  const userData = JSON.parse(localStorage.getItem(username));
-                  if (userData && userData.password === password && userData.role === userType) {
-                      if (userType === 'user') {
-                          alert('Login successful!');
-                          window.location.href = 'index.html';
-                      } else if (userType === 'admin') {
-                          alert('Welcome back Admin');
-                          window.location.href = 'admindashboard.html';
-                      }
-                      loginBtn.textContent = 'Logout'; // Change login button text to Logout
-                      loginBtn.href = '#'; // Change login button href to "#"
-                      loginForm.reset(); // Reset the form after successful login
-                  } else {
-                      alert('Invalid username, password, or user type!');
-                  }
-              });
-          } else {
-              console.error('Login form not found!');
-          }
-      });
-
-
-  </script>
-<script>
- 
-    document.addEventListener("DOMContentLoaded", function() {
-        const loginButton = document.querySelector(".login_button");
-
-        if (loginButton) {
-            const isLoggedIn = localStorage.getItem("isLoggedIn");
-
-            if (isLoggedIn === "true") {
-                // If user is logged in, show logout button
-                loginButton.textContent = "Logout";
-                loginButton.addEventListener("click", function() {
-                    localStorage.setItem("isLoggedIn", "false"); // Set isLoggedIn to false
-                    window.location.href = "login.html"; // Redirect to login page
-                });
+                if (isLoggedIn === "true") {
+                    // If user is logged in, show logout button
+                    loginButton.textContent = "Logout";
+                    loginButton.href = "#"; // Update href attribute with logout action
+                    loginButton.addEventListener("click", function() {
+                        localStorage.setItem("isLoggedIn", "false"); // Set isLoggedIn to false
+                        window.location.href = "login.html"; // Redirect to login page
+                    });
+                } else {
+                    // If user is not logged in, show login button
+                    loginButton.textContent = "Login";
+                    loginButton.href = "login.html"; // Update href attribute with login page URL
+                }
             } else {
-                // If user is not logged in, show login button
-                loginButton.textContent = "Login";
-                loginButton.href = "login.html"; // Update href attribute with login page URL
+                console.error("Login button not found!");
             }
-        } else {
-            console.error("Login button not found!");
-        }
-    });
-</script>
-
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var navToggle = document.getElementById("nav-toggle");
-        var navMenu = document.querySelector(".nav");
-  
-        navToggle.addEventListener("click", function() {
-            navMenu.classList.toggle("active");
         });
-    });
-  </script>
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var navToggle = document.getElementById("nav-toggle");
+            var navMenu = document.querySelector(".nav");
+      
+            navToggle.addEventListener("click", function() {
+                navMenu.classList.toggle("active");
+            });
+        });
+    </script>
 </body>
 </html>
-
