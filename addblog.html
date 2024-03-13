@@ -14,10 +14,10 @@
   <div class="modal">
     <label for="modal-toggle" class="modal-close"><button><a href="admindashboard.html">X</a></button></label>
     <h2>Add Blog</h2>
-    <form class="modal-form" enctype="multipart/form-data" id="blog-form">
+    <form class="modal-form" id="blog-form">
       <div class="form-group">
-        <label for="picture">Picture:</label>
-        <input type="file" id="picture" name="picture" accept="image/*" required>
+        <label for="picture">Picture Link:</label>
+        <input type="text" id="picture" name="picture" required>
       </div>
       <div class="form-group">
         <label for="title">Title:</label>
@@ -42,6 +42,11 @@
 <div id="blog-cards" class="blog-cards"></div>
 
 <script>
+  // Function to generate a unique ID
+  function generateUniqueId() {
+    return 'blog_' + Date.now(); // Example: blog_1649203846593
+  }
+
   // Function to handle form submission
   document.getElementById('blog-form').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -52,6 +57,9 @@
     formData.forEach(function(value, key) {
       blogData[key] = value;
     });
+
+    // Add a unique ID to the blog
+    blogData.id = generateUniqueId();
 
     // Store form data in local storage
     var blogs = localStorage.getItem('blogs') ? JSON.parse(localStorage.getItem('blogs')) : [];
@@ -69,9 +77,10 @@
   function generateBlogCard(blog) {
     var card = document.createElement('div');
     card.classList.add('blog-card');
+    card.setAttribute('data-blog-id', blog.id); // Set data attribute for blog ID
 
     var image = document.createElement('img');
-    image.src = URL.createObjectURL(blog.picture);
+    image.src = blog.picture; // Use the provided image link
     image.alt = 'Blog Picture';
     card.appendChild(image);
 
