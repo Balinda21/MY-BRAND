@@ -66,27 +66,33 @@
       var card = document.createElement('div');
       card.classList.add('blog-card');
 
+      // Create image element
       var image = document.createElement('img');
-      image.src = URL.createObjectURL(blog.picture);
+      image.src = blog.picture;
       image.alt = 'Blog Picture';
       card.appendChild(image);
 
+      // Create content div
       var content = document.createElement('div');
       content.classList.add('card-content');
 
+      // Title
       var title = document.createElement('h2');
       title.textContent = blog.title;
       content.appendChild(title);
 
+      // Date
       var date = document.createElement('span');
       date.classList.add('card-date');
       date.textContent = blog.date;
       content.appendChild(date);
 
+      // Description
       var description = document.createElement('p');
       description.textContent = blog.description;
       content.appendChild(description);
 
+      // Append content to card
       card.appendChild(content);
 
       return card;
