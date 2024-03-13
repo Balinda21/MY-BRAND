@@ -99,7 +99,7 @@
         <button class="google-signin-button">Sign in with Google</button>
     </div>
 <!--JS SECTION-->
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         const loginForm = document.getElementById('login-form');
 
@@ -132,7 +132,40 @@
             // Redirect to homepage or desired location
             window.location.href = 'index.html';
         
+</script> -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.getElementById('login-form');
+
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const userType = document.getElementById('user-type').value;
+
+            // Check if password meets the minimum length requirement
+            if (password.length < 9) {
+                alert('Password must be at least 9 characters long!');
+                return;
+            }
+
+            const userData = JSON.parse(localStorage.getItem(username));
+            if (userData && userData.password === password && userData.role === userType) {
+                if (userType === 'user') {
+                    alert('Login successful!');
+                    window.location.href = 'index.html';
+                } else if (userType === 'admin') {
+                    alert('Welcome back Admin');
+                    window.location.href = 'admindashboard.html';
+                }
+                loginForm.reset(); // Reset the form after successful login
+            } else {
+                alert('Invalid username, password, or user type!');
+            }
+        });
+    });
 </script>
+
 
 </body>
 </html>

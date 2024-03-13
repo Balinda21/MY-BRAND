@@ -85,29 +85,39 @@
     </div>
 </body>
 </html>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const signupForm = document.getElementById('signup-form');
+        const signupForm = document.getElementById('signup-form');
 
-    signupForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const username = document.getElementById('signup-username').value;
-        const password = document.getElementById('signup-password').value;
-        const role = document.getElementById('signup-role').value;
+        signupForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('signup-username').value;
+            const password = document.getElementById('signup-password').value;
+            const role = document.getElementById('signup-role').value;
 
-        
-        if (localStorage.getItem(username)) {
-            alert('Username already exists! Please choose another one.');
-        } else {
-            
-            localStorage.setItem(username, JSON.stringify({password: password, role: role}));
-            alert('Signup successful! Please login.');
-            window.location.href = 'login.html';
-        }
+            // Check if password meets the minimum length requirement
+            if (password.length < 9) {
+                alert('Password must be at least 9 characters long!');
+                return; // Prevent form submission if password is too short
+            }
 
-       
-        signupForm.reset();
+            // Check if password contains both letters and numbers using regular expressions
+            if (!/(?=.*[a-zA-Z])(?=.*\d)/.test(password)) {
+                alert('Password must contain both letters and numbers!');
+                return; // Prevent form submission if password doesn't contain both letters and numbers
+            }
+
+            if (localStorage.getItem(username)) {
+                alert('Username already exists! Please choose another one.');
+            } else {
+                localStorage.setItem(username, JSON.stringify({ password: password, role: role }));
+                alert('Signup successful! Please login.');
+                window.location.href = 'login.html';
+            }
+
+            signupForm.reset();
+        });
     });
-});
-
 </script>
+
