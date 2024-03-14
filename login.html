@@ -101,38 +101,45 @@
 <!--JS SECTION-->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const loginForm = document.getElementById('login-form');
+    const loginForm = document.getElementById('login-form');
 
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            const userType = document.getElementById('user-type').value;
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+        const userType = document.getElementById('user-type').value;
 
-            const userData = JSON.parse(localStorage.getItem(username));
-            if (userData && userData.password === password && userData.role === userType) {
-                if (userType === 'user') {
-                    alert('Login successful!');
-                    window.location.href = 'index.html';
-                } else if (userType === 'admin') {
-                    alert('Welcome back Admin');
-                    window.location.href = 'admindashboard.html';
-                }
-                loginForm.reset(); // Reset the form after successful login
+        const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+        console.log('Existing Users:', existingUsers); // Debugging statement
+
+        const user = existingUsers.find(user => user.username === username && user.password === password);
+        console.log('User:', user); // Debugging statement
+
+        if (user) {
+            if (userType === 'admin' && user.isAdmin) {
+                alert('Welcome back Admin');
+                localStorage.setItem('isLoggedIn', true);
+                localStorage.setItem('username', username);
+                localStorage.setItem('userType', userType);
+                window.location.href = 'admindashboard.html';
+            } else if (userType === 'user' && !user.isAdmin) {
+                alert('Login successful!');
+                localStorage.setItem('isLoggedIn', true);
+                localStorage.setItem('username', username);
+                localStorage.setItem('userType', userType);
+                window.location.href = 'index.html';
             } else {
                 alert('Invalid username, password, or user type!');
             }
-        });
+            loginForm.reset(); // Reset the form after successful login
+        } else {
+            alert('Invalid username or password!');
+        }
     });
-     // If login successful, store login status in local storage
-     localStorage.setItem('isLoggedIn', true);
-            localStorage.setItem('username', username);
-            localStorage.setItem('userType', userType);
+});
 
-            // Redirect to homepage or desired location
-            window.location.href = 'index.html';
-        
-</script>
+    </script>
+
 
 </body>
 </html>
