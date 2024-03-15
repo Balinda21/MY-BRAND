@@ -27,76 +27,75 @@
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-      .container a{
-        text-decoration: none;
-        color: red;
-        font-weight: bold;
-      }
+        .container a{
+            text-decoration: none;
+            color: red;
+            font-weight: bold;
+        }
         h1 {
             text-align: center;
             margin-bottom: 20px;
-           
         }
-        .query {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
             border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
             background-color: #f9f9f9;
-        }
-        .query:last-child {
-            margin-bottom: 0;
-        }
-        .query-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .name {
             font-weight: bold;
-            color: green;
-        }
-        .email {
-            color: #666;
-        }
-        .title {
-            font-weight: bold;
-            color: #333;
-        }
-        .description {
-            color: #666;
-            margin-top: 5px;
-        }
-        .question {
-            margin-top: 10px;
-            color: #333;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header-options"><h1>Queries </h1>
-            <a href="admindashboard.html">exit</a></div>
-        
-        <div class="query">
-            <div class="query-header">
-                <div>
-                    <span class="name">Musinga Bertrand</span>
-                    <span class="email">&lt;bertrand@gmail.com&gt;</span>
-                </div>
-            </div>
-            <div class="title">Password</div>
-            <div class="question">How can I change my account password?</div>
-            <div class="description">I want to change my password because i forgot the one is used before</div>
+        <div class="header-options">
+            <h1>Queries </h1>
+            <a href="admindashboard.html">exit</a>
         </div>
-        <div class="query">
-       
-            <div class="title">Price</div>
-            <div class="question">I want personal website</div>
-            <div class="description">I would like you to build an ecommerce website for me and how much does it take,and What are the payment options available? </div>
-        </div>
-        <!-- Add more queries as needed -->
+        <table id="queryTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+        </table>
+
     </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        var contactData = localStorage.getItem('contactData');
+        if (contactData) {
+            contactData = JSON.parse(contactData);
+            displayContactData(contactData);
+        }
+    });
+
+  
+    function displayContactData(contactData) {
+        var tableBody = document.querySelector('#queryTable tbody');
+
+        var newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>${contactData.name}</td>
+            <td>${contactData.email}</td>
+            <td>${contactData.subject}</td>
+            <td>${contactData.message}</td>
+        `;
+
+        tableBody.appendChild(newRow);
+    }
+</script>
 </html>
