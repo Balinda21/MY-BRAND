@@ -158,6 +158,43 @@
             }
         });
     </script>
+ <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const logoutButton = document.getElementById("login-btn");
+
+        if (logoutButton) {
+            logoutButton.addEventListener("click", async function() {
+                try {
+                    const response = await fetch("http://localhost:3000/logout", {
+                        method: "POST",
+                        credentials: "include" // Include cookies in the request
+                    });
+
+                    if (response.ok) {
+                        // If logout is successful, redirect to the login page
+                        window.location.href = "login.html";
+                    } else {
+                        // Handle error
+                        console.error("Logout failed:", response.statusText);
+                    }
+                } catch (error) {
+                    console.error("Error during logout:", error.message);
+                }
+            });
+        } else {
+            console.error("Logout button not found!");
+        }
+       
+    });
+</script>
+
+
+
+
+
+
+
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var navToggle = document.getElementById("nav-toggle");
