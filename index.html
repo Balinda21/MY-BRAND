@@ -135,20 +135,21 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const loginButton = document.getElementById("login-btn");
-
+    
             if (loginButton) {
-                const isLoggedIn = localStorage.getItem("isLoggedIn");
-
-                if (isLoggedIn === "true") {
-                    // If user is logged in, show logout button
+                const token = localStorage.getItem("token");
+    
+                if (token) {
+                    // If token is present, user is logged in
                     loginButton.textContent = "Logout";
-                    loginButton.href = "#"; // Update href attribute with logout action
                     loginButton.addEventListener("click", function() {
-                        localStorage.setItem("isLoggedIn", "false"); // Set isLoggedIn to false
-                        window.location.href = "login.html"; // Redirect to login page
+                        // Clear token from localStorage
+                        localStorage.removeItem("token");
+                        // Redirect to login page
+                        window.location.href = "login.html";
                     });
                 } else {
-                    // If user is not logged in, show login button
+                    // If token is not present, user is not logged in
                     loginButton.textContent = "Login";
                     loginButton.href = "login.html"; // Update href attribute with login page URL
                 }
@@ -157,7 +158,6 @@
             }
         });
     </script>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var navToggle = document.getElementById("nav-toggle");
@@ -168,5 +168,6 @@
             });
         });
     </script>
+    
 </body>
 </html>
