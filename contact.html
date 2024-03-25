@@ -6,32 +6,33 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Me</title>
+  <title>Contact Me page</title>
   <link rel="stylesheet" href="contact.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   
     <div class="">
-        <header>
-          <h3 class="farmie">
-            <span class="far">Mau</span>rice.
-          </h3>
-          <nav class="nav">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="#Services">Services</a>
-            <a href="projects.html">Projects</a>
-            <a href="blogs.html">Blog</a>
-            <a href="contact.html">Contact</a>
-          </nav>            
-         <a href="admindashboard.html"><button class="login_button" >
-              Login
-            </button></a>
-          <button class="nav-btn" >
-            <FaBars />
-          </button>
-        </header>
+      <header>
+        <h3 class="farmie">
+          <span class="far">Mau</span>rice.
+        </h3>
+        <nav class="nav">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="#Services">Services</a>
+          <a href="projects.html">Projects</a>
+          <a href="blogs.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </nav>            
+        <a href="login.html" class="login_button">
+          Login
+        </a>
+        <button id="nav-toggle" class="nav-btn">
+          <i class="fa fa-bars"></i>
+        </button>
+        
+      </header>
       </div>
   
       <div class="hero_section">      
@@ -79,3 +80,70 @@
  
 </body>
 </html>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      var navToggle = document.getElementById("nav-toggle");
+      var navMenu = document.querySelector(".nav");
+
+      navToggle.addEventListener("click", function() {
+          navMenu.classList.toggle("active");
+      });
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+      var navToggle = document.getElementById("nav-toggle");
+      var navMenu = document.querySelector(".nav");
+
+      navToggle.addEventListener("click", function() {
+          navMenu.classList.toggle("active");
+      });
+
+      var form = document.querySelector("form");
+      form.addEventListener("submit", function(event) {
+          event.preventDefault();
+
+          var name = document.querySelector("input[name='name']").value;
+          var email = document.querySelector("input[name='email']").value;
+          var subject = document.querySelector("input[name='subject']").value;
+          var message = document.querySelector("textarea[name='message']").value;
+
+          var contactData = {
+              name: name,
+              email: email,
+              subject: subject,
+              message: message
+          };
+
+          localStorage.setItem("contactData", JSON.stringify(contactData));
+          alert('Submitted');
+          form.reset();
+
+          
+      });
+  });
+  
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const loginButton = document.querySelector(".login_button");
+
+      if (loginButton) {
+          const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+          if (isLoggedIn === "true") {
+              // If user is logged in, show logout button
+              loginButton.textContent = "Logout";
+              loginButton.addEventListener("click", function() {
+                  localStorage.setItem("isLoggedIn", "false"); // Set isLoggedIn to false
+                  window.location.href = "login.html"; // Redirect to login page
+              });
+          } else {
+              // If user is not logged in, show login button
+              loginButton.textContent = "Login";
+              loginButton.href = "login.html"; // Update href attribute with login page URL
+          }
+      } else {
+          console.error("Login button not found!");
+      }
+  });
+</script>

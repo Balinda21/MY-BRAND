@@ -15,24 +15,25 @@
 <body>
     <div>
         <header>
-          <h3 class="farmie">
-            <span class="far">Mau</span>rice
-          </h3>
-          <nav class="nav">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="">Services</a>
-            <a href="projects.html">Projects</a>
-            <a href="blogs.html">Blog</a>
-            <a href="contact.html">Contact</a>
-          </nav>            
-         <a href="admindashboard.html"><button class="login_button" >
-            Login
-          </button></a>
-          <button class="nav-btn" >
-            <FaBars />
-          </button>
-        </header>
+            <h3 class="farmie">
+              <span class="far">Mau</span>rice.
+            </h3>
+            <nav class="nav">
+              <a href="index.html">Home</a>
+              <a href="about.html">About</a>
+              <a href="#Services">Services</a>
+              <a href="projects.html">Projects</a>
+              <a href="blogs.html">Blog</a>
+              <a href="contact.html">Contact</a>
+            </nav>            
+            <a href="login.html" class="login_button">
+              Login
+            </a>
+            <button id="nav-toggle" class="nav-btn">
+              <i class="fa fa-bars"></i>
+            </button>
+            
+          </header>
       </div>
       <!--Hero section-->
       <div class="hero_section">      
@@ -122,3 +123,37 @@
       
 </body>
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var navToggle = document.getElementById("nav-toggle");
+        var navMenu = document.querySelector(".nav");
+  
+        navToggle.addEventListener("click", function() {
+            navMenu.classList.toggle("active");
+        });
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginButton = document.querySelector(".login_button");
+  
+        if (loginButton) {
+            const isLoggedIn = localStorage.getItem("isLoggedIn");
+  
+            if (isLoggedIn === "true") {
+                // If user is logged in, show logout button
+                loginButton.textContent = "Logout";
+                loginButton.addEventListener("click", function() {
+                    localStorage.setItem("isLoggedIn", "false"); // Set isLoggedIn to false
+                    window.location.href = "login.html"; // Redirect to login page
+                });
+            } else {
+                // If user is not logged in, show login button
+                loginButton.textContent = "Login";
+                loginButton.href = "login.html"; // Update href attribute with login page URL
+            }
+        } else {
+            console.error("Login button not found!");
+        }
+    });
+  </script>

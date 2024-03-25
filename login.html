@@ -86,8 +86,12 @@
         <h2>Login</h2>
         <form id="login-form">
             <input type="text" name="login-username" id="login-username" placeholder="Username" required>
-            <input type="password" name="login-password" id="login-password" placeholder="Password" required>          
-                     
+            <input type="password" name="login-password" id="login-password" placeholder="Password" required>
+            <select name="user-type" id="user-type">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+            <input type="submit" value="Login">       
         </form>
         <div class="signup-link">
             <span>Don't have an account? </span><a href="signup.html">Sign up here</a>
@@ -95,26 +99,47 @@
         <button class="google-signin-button">Sign in with Google</button>
     </div>
 <!--JS SECTION-->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginForm = document.getElementById('login-form');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('login-form');
 
-            loginForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const username = document.getElementById('login-username').value;
-                const password = document.getElementById('login-password').value;
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+        const userType = document.getElementById('user-type').value;
 
-                const userData = JSON.parse(localStorage.getItem(username));
-                if (userData && userData.password === password) {
-                    alert('Login successful!');
-                } else {
-                    alert('Invalid username or password!');
-                }
+        const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+        console.log('Existing Users:', existingUsers); // Debugging statement
 
-               
-                loginForm.reset();
-            });
-        });
+        const user = existingUsers.find(user => user.username === username && user.password === password);
+        console.log('User:', user); // Debugging statement
+
+        if (user) {
+            if (userType === 'admin' && user.isAdmin) {
+                alert('Welcome back Admin');
+                localStorage.setItem('isLoggedIn', true);
+                localStorage.setItem('username', username);
+                localStorage.setItem('userType', userType);
+                window.location.href = 'admindashboard.html';
+            } else if (userType === 'user' && !user.isAdmin) {
+                alert('Login successful!');
+                localStorage.setItem('isLoggedIn', true);
+                // localStorage.setItem('username', username);
+                localStorage.setItem('userType', userType);
+                window.location.href = 'index.html';
+            } else {
+                alert('Invalid username, password, or user type!');
+            }
+            loginForm.reset(); // Reset the form after successful login
+        } else {
+            alert('Invalid username or password!');
+        }
+    });
+});
+
     </script>
+
+
 </body>
 </html>
