@@ -60,6 +60,8 @@
 
   <div class="blog-cards-container" id="blog-cards-container"></div>
 
+  
+</body>
   <!-- Modal -->
   <div id="editModal" class="modal">
     <div class="modal-content">
@@ -79,119 +81,41 @@
     </div>
   </div>
   <script>
-    // Function to generate HTML for blog post cards
-    function generateBlogCard(blog) {
-      const card = document.createElement('div');
-      card.classList.add('blog-card');
+  
+    document.addEventListener("DOMContentLoaded", function() {
+      // Fetch blogs
+      fetch('http://localhost:3000/api/get/blogs')
+        .then(response => response.json())
+        .then(data => {
+          const blogContainer = document.getElementById('blog-cards-container');
+          data.forEach(blog => {
+            const blogCard = document.createElement('div');
+            blogCard.classList.add('blog-card');
+            blogCard.innerHTML = `
+              
+              <div class="blog-content">
+                <img src="${blog.picture}" alt="Blog Picture">
+                <h2>${blog.title}</h2>
 
-      const image = document.createElement('img');
-      image.src = blog.picture; // Replace with correct image source
-      image.alt = 'Blog Picture';
-      card.appendChild(image);
+                
+              </div>
+              <div class="blog-header">
+                <p>Date: ${blog.date}</p>
+                <p>${blog.description}</p>
 
-      const content = document.createElement('div');
-      content.classList.add('card-content');
+              </div>
+            `;
 
-      const title = document.createElement('h2');
-      title.textContent = blog.title;
-      content.appendChild(title);
-
-      const date = document.createElement('span');
-      date.classList.add('card-date');
-      date.textContent = blog.date;
-      content.appendChild(date);
-
-      const description = document.createElement('p');
-      description.textContent = blog.description;
-      content.appendChild(description);
-
-      card.appendChild(content);
-
-      const editButton = document.createElement('button');
-      editButton.textContent = 'Edit';
-      editButton.classList.add('edit-button');
-      editButton.onclick = () => populateEditForm(blog); // Corrected function call
-      card.appendChild(editButton);
-
-      const deleteButton = document.createElement('button');
-      deleteButton.textContent = 'Delete';
-      deleteButton.classList.add('delete-button');
-      deleteButton.onclick = () => deleteBlog(blog); // Corrected function call
-      card.appendChild(deleteButton);
-
-      return card;
-    }
-
+            blogContainer.appendChild(blogCard);
+          });
+        })
+        .catch(error => console.error('Error fetching blogs:', error));
+    });
+ 
     // Function to update blog cards from local storage
-    function updateBlogCards() {
-      const blogCardsContainer = document.getElementById('blog-cards-container');
-      blogCardsContainer.innerHTML = '';
 
-      const blogs = JSON.parse(localStorage.getItem('blogs')) || [];
-      blogs.forEach(blog => {
-        const card = generateBlogCard(blog);
-        blogCardsContainer.appendChild(card);
-      });
-    }
-
-    // Function to populate edit form with blog details
-    function populateEditForm(blog) {
-      const editTitle = document.getElementById('editTitle');
-      const editDate = document.getElementById('editDate');
-      const editDescription = document.getElementById('editDescription');
-      const editPicture = document.getElementById('editPicture'); // New picture input field
-
-      editTitle.value = blog.title;
-      editDate.value = blog.date;
-      editDescription.value = blog.description;
-      editPicture.value = blog.picture; // Populate picture input field with existing picture
-
-      document.getElementById('editModal').style.display = 'block';
-      document.getElementById('editForm').onsubmit = function(event) {
-        event.preventDefault();
-
-        const updatedTitle = editTitle.value;
-        const updatedDate = editDate.value;
-        const updatedDescription = editDescription.value;
-        const updatedPicture = editPicture.value; // Get updated picture input
-
-        let blogs = JSON.parse(localStorage.getItem('blogs')) || [];
-
-        blogs.forEach((item, index) => {
-          if (item.title === blog.title && item.date === blog.date && item.description === blog.description) {
-            blogs[index] = {
-              title: updatedTitle,
-              date: updatedDate,
-              description: updatedDescription,
-              picture: updatedPicture // Update picture in the blog object
-            };
-          }
-        });
-
-        localStorage.setItem('blogs', JSON.stringify(blogs));
-
-        document.getElementById('editModal').style.display = 'none';
-        updateBlogCards();
-      };
-    }
-
-    // Function to delete a blog post
-    function deleteBlog(blog) {
-      let blogs = JSON.parse(localStorage.getItem('blogs')) || [];
-      blogs = blogs.filter(item => item.title !== blog.title); // Filter out the selected blog
-      localStorage.setItem('blogs', JSON.stringify(blogs)); // Update local storage
-      updateBlogCards(); // Update UI
-    }
-
-    // Close the modal when the user clicks on (x)
-    const closeBtn = document.getElementsByClassName("close")[0];
-    closeBtn.onclick = () => {
-      document.getElementById("editModal").style.display = "none";
-    }
-
-    // Load existing blogs initially
-    updateBlogCards();
 </script>
 
   </body>
+
 </html>
