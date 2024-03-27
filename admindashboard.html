@@ -60,52 +60,6 @@
 
   <div class="blog-cards-container" id="blog-cards-container"></div>
 
-  <script>
-    // Function to generate HTML for blog post cards
-    function generateBlogCard(blog) {
-      var card = document.createElement('div');
-      card.classList.add('blog-card');
-
-      var image = document.createElement('img');
-      image.src = URL.createObjectURL(blog.picture);
-      image.alt = 'Blog Picture';
-      card.appendChild(image);
-
-      var content = document.createElement('div');
-      content.classList.add('card-content');
-
-      var title = document.createElement('h2');
-      title.textContent = blog.title;
-      content.appendChild(title);
-
-      var date = document.createElement('span');
-      date.classList.add('card-date');
-      date.textContent = blog.date;
-      content.appendChild(date);
-
-      var description = document.createElement('p');
-      description.textContent = blog.description;
-      content.appendChild(description);
-
-      card.appendChild(content);
-
-      return card;
-    }
-
-    // Function to update blog cards from local storage
-    function updateBlogCards() {
-      var blogCardsContainer = document.getElementById('blog-cards-container');
-      blogCardsContainer.innerHTML = '';
-
-      var blogs = localStorage.getItem('blogs') ? JSON.parse(localStorage.getItem('blogs')) : [];
-      blogs.forEach(function(blog) {
-        var card = generateBlogCard(blog);
-        blogCardsContainer.appendChild(card);
-      });
-    }
-
-    // Call updateBlogCards initially to load existing blogs
-    updateBlogCards();
-  </script>
+  
 </body>
 </html>
