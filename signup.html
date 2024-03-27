@@ -71,43 +71,53 @@
     <div class="signup-container">
         <h2>Sign Up</h2>
         <form id="signup-form">
-            <input type="text" id="signup-username" placeholder="Username" required>
+            <input type="text" id="signup-name" placeholder="Name" required>
+            <input type="email" id="signup-email" placeholder="Email" required>
             <input type="password" id="signup-password" placeholder="Password" required>
-            <select id="signup-usertype">
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-            </select>
             <input type="submit" value="Sign Up">
         </form>
         <div class="login-link">
             <span>Already have an account? </span><a href="login.html">Go back to login</a>
         </div>
     </div>
+
 </body>
 </html>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const signupForm = document.getElementById('signup-form');
+        const signupForm = document.getElementById('signup-form');
 
-    signupForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const username = document.getElementById('signup-username').value;
-        const password = document.getElementById('signup-password').value;
-        const userType = document.getElementById('signup-usertype').value;
+        signupForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
 
-        
-        if (localStorage.getItem(username)) {
-            alert('Username already exists! Please choose another one.');
-        } else {
-            
-            localStorage.setItem(username, JSON.stringify({password: password, userType: userType}));
-            alert('Signup successful! Please login.');
-            window.location.href = 'login.html';
-        }
+            try {
+                const response = await fetch('http://localhost:3000/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password })
+                });
 
-       
-        signupForm.reset();
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.message);
+                }
+
+                alert('Signup successful! Please login.');
+                window.location.href = 'login.html';
+            } catch (error) {
+                console.error(error);
+                alert('Error: ' + error.message);
+            }
+
+            signupForm.reset();
+        });
     });
-});
-
 </script>
+    </body>
+</html>
+

@@ -51,6 +51,8 @@
         }
         .like-comment-section {
             margin-top: 20px;
+            display: flex;
+            gap: 20px;
         }
 
         .like-btn,
@@ -77,7 +79,6 @@
         }
 
         /* Style for comment form */
-        .comment-form input,
         .comment-form textarea,
         .comment-form button {
             width: 100%;
@@ -100,6 +101,13 @@
 
         .comment-form button:hover {
             background-color: #0056b3;
+        }
+        .liked {
+            filter: invert(37%) sepia(95%) saturate(2526%) hue-rotate(332deg) brightness(101%) contrast(105%);
+        }
+
+        .login-required {
+            display: none;
         }
     </style>
 </head>
@@ -136,24 +144,21 @@
                 <span class="card-date">January 1, 2022</span>
                 <p>AI is a tool created and controlled by humans. While AI technologies continue to advance rapidly and play </p>
                 <div class="like-comment-section">
-                    <button class="like-btn">Like</button>
-                    <button class="comment-btn">Comment</button>
+                    <i><img id="likeIcon" src="./images/heart.png" alt="" style="width: 20px; cursor: pointer;" onclick="like()"></i>
+                    <span id="likeCount">0</span>
                 </div>
                 <!-- Comment section -->
                 <div class="comment-section">
                     <h3>Comments</h3>
-                    <div class="comment">
-                        <p>Ishimwe kevin: This is a great article!</p>
-                    </div>
-                    <div class="comment">
-                        <p>Gisa Emely: Thanks for sharing this valuable information.</p>
-                    </div>
+                    <div class="comments"></div>
                     <!-- Add comment form -->
                     <form class="comment-form">
-                        <input type="text" placeholder="Your name">
                         <textarea placeholder="Your comment"></textarea>
                         <button type="submit">Submit</button>
                     </form>
+                </div>
+                <div class="login-required">
+                    <p>You must be logged in to leave a comment. <a href="login.html">Login</a></p>
                 </div>
             </div>
         </div>
@@ -171,15 +176,125 @@
             </div>
         </div>
     </footer>
+    <script>
+        var likeCount = 0;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const loginButton = document.querySelector(".login_button");
+      
+            if (loginButton) {
+                const isLoggedIn = localStorage.getItem("isLoggedIn");
+      
+                if (isLoggedIn === "true") {
+                    // If user is logged in, show logout button
+                    loginButton.textContent = "Logout";
+                    loginButton.addEventListener("click", function() {
+                        localStorage.setItem("isLoggedIn", "false"); // Set isLoggedIn to false
+                        window.location.href = "login.html"; // Redirect to login page
+                    });
+                } else {
+                    // If user is not logged in, show login button
+                    loginButton.textContent = "Login";
+                    loginButton.href = "login.html"; // Update href attribute with login page URL
+                }
+            } else {
+                console.error("Login button not found!");
+            }
+        });
+
+        // Function to handle form submission
+        document.querySelector(".comment-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var commentInput = document.querySelector(".comment-form textarea");
+            var comment = commentInput.value.trim();
+
+            if (comment !== "") {
+                var newComment = comment;
+
+                // Add username to comment if logged in
+                var username = localStorage.getItem("username");
+                if (username) {
+                    newComment = username + ": " + newComment;
+                }
+
+                addComment(newComment);
+
+                // Store comment in local storage
+                var comments = localStorage.getItem("comments");
+                if (!comments) {
+                    comments = [];
+                } else {
+                    comments = JSON.parse(comments);
+                }
+                comments.push(newComment);
+                localStorage.setItem("comments", JSON.stringify(comments));
+
+                // Clear input field
+                commentInput.value = "";
+            } else {
+                alert("Please fill in the comment field.");
+            }
+        });
+
+        // Load comments from local storage
+        var savedComments = localStorage.getItem("comments");
+        if (savedComments) {
+            savedComments = JSON.parse(savedComments);
+            savedComments.forEach(function(comment) {
+                addComment(comment);
+            });
+        }
+
+        // Function to handle liking
+        function like() {
+            var likeIcon = document.getElementById("likeIcon");
+
+            // Toggle color class
+            likeIcon.classList.toggle("liked");
+
+            // Increment or decrement like count based on current state
+            if (likeIcon.classList.contains("liked")) {
+                likeCount++;
+            } else {
+                likeCount--;
+            }
+
+            // Update like count in UI
+            document.getElementById("likeCount").textContent = likeCount;
+
+            // Store like count in local storage
+            localStorage.setItem("likeCount", likeCount);
+        }
+
+        // Restore like count from local storage
+        var storedLikeCount = localStorage.getItem("likeCount");
+        if (storedLikeCount) {
+            likeCount = parseInt(storedLikeCount);
+            document.getElementById("likeCount").textContent = likeCount;
+        }
+
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+        const commentSectionContainer = document.querySelector(".comment-section");
+        const loginRequiredMessage = document.querySelector(".login-required");
+
+        if (isLoggedIn === "true") {
+            // If user is logged in, show comment form
+            commentSectionContainer.style.display = "block";
+            loginRequiredMessage.style.display = "none";
+        } else {
+            // If user is not logged in, hide comment form and show login required message
+            commentSectionContainer.style.display = "none";
+            loginRequiredMessage.style.display = "block";
+        }
+
+        // Function to add comment to the UI
+        function addComment(comment) {
+            var commentsContainer = document.querySelector(".comments");
+            var commentDiv = document.createElement("div");
+            commentDiv.classList.add("comment");
+            commentDiv.innerHTML = "<p>" + comment + "</p>";
+            commentsContainer.appendChild(commentDiv);
+        }
+    </script>
 </body>
 </html>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var navToggle = document.getElementById("nav-toggle");
-        var navMenu = document.querySelector(".nav");
-  
-        navToggle.addEventListener("click", function() {
-            navMenu.classList.toggle("active");
-        });
-    });
-  </script>
