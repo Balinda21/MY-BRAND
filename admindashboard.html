@@ -1,101 +1,121 @@
 <!DOCTYPE html>
-
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-  
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="blogs.css">
-    <link rel="stylesheet" href="admindashboard.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-  </head>
-  <body>
-    <header class="admin-header">
-      <div>
-        <h3>Admin Dashboard</h3>
-      </div>
-      <div style="display: flex; gap: 10px;">
-        <div><img src="./images/dash.jpg" alt="" style=" width: 50px; height: 45px; border-radius: 500px;"></div>
-        <div><h4>Maurice</h4></div>
-      </div>
-    </header>
-    <input type="checkbox" id="check">
-    <label for="check">
-      <i class="fas fa-bars" id="btn"></i>
-      <i class="fas fa-times" id="cancel"></i>
-    </label>
-    <div class="sidebar">
-      <header>Maurice</header>
-      <a href="#" class="active">
-        <i class="fas fa-qrcode"></i>
-        <span>Dashboard</span>
-      </a>
-      
-      <a href="#">
-        <i class="fas fa-stream"></i>
-        <span>Blogs</span>
-      </a>
-      <a href="addblog.html">
-         <i class="fas fa-calendar"></i>
-        <span>Add Blog</span>
-      </a>
-      <a href="adminqueries.html">
-        <i class="fas fa-calendar"></i>
-       <span>Querries</span>
-     </a>
-      <a href="index.html">
-        <i class="fas fa-calendar"></i>
-       <span>Logout</span>
-     </a>
-      
-      
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="blogs.css">
+  <link rel="stylesheet" href="admindashboard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+  <header class="admin-header">
+    <div>
+      <h3>Admin Dashboard</h3>
     </div>
+    <div style="display: flex; gap: 10px;">
+      <div><img src="./images/dash.jpg" alt="" style=" width: 50px; height: 45px; border-radius: 500px;"></div>
+      <div><h4>Maurice</h4></div>
+    </div>
+  </header>
+  <input type="checkbox" id="check">
+  <label for="check">
+    <i class="fas fa-bars" id="btn"></i>
+    <i class="fas fa-times" id="cancel"></i>
+  </label>
+  <div class="sidebar">
+    <header>Maurice</header>
+    <a href="#" class="active">
+      <i class="fas fa-qrcode"></i>
+      <span>Dashboard</span>
+    </a>
+    <a href="#">
+      <i class="fas fa-stream"></i>
+      <span>Blogs</span>
+    </a>
+    <a href="addblog.html">
+      <i class="fas fa-calendar"></i>
+      <span>Add Blog</span>
+    </a>
+    <a href="adminqueries.html">
+      <i class="fas fa-calendar"></i>
+      <span>Queries</span>
+    </a>
+    <a href="index.html">
+      <i class="fas fa-calendar"></i> 
+      <span>Logout</span>
+    </a>
+  </div>
 
-    <div class="card-holder">
-      <div class="comments"> 
-        total comments : 300
-      </div>
-      <div class="likes">
-        total likes : 200
-      </div>
+  <div class="card-holder">
+    <div class="comments"> 
+      Total comments: 300
     </div>
-    
-    <div class="blog-cards-container">
-      <div class="blog-card">
-          <img src="./images/ai.jpg" alt="Blog Image">
-          <div class="card-content">
-              <h2>Artificial intelligence</h2>
-              <span class="card-date">January 1, 2022</span>
-              <p>AI is a tool created and controlled by humans. While AI technologies continue to advance rapidly and play </p>
-              <a href="#" class="read-more">Edit</a>
-              <a href="#" class="Delete">Delete</a>
-          </div>
-      </div>
-      <div class="blog-card">
-          <img src="./images/javascript.jpg" alt="Blog Image">
-          <div class="card-content">
-              <h2>Javascript</h2>
-              <span class="card-date">January 1, 2022</span>
-              <p>versatility and ease of use have led to its widespread adoption across various domains
-                  .</p>
-              <a href="#" class="read-more">Edit</a>
-              <a href="#" class="Delete">Delete</a>
-          </div>
-      </div> 
-      <div class="blog-card">
-          <img src="./images/web.jpg" alt="Blog Image">
-          <div class="card-content">
-              <h2>Become Developer</h2>
-              <span class="card-date">January 2, 2022</span>
-              <p>
-                  Becoming a developer can be an exciting and rewarding journey, but it requires dedication </p>
-              <a href="#" class="read-more">Edit</a>
-              <a href="#" class="Delete">Delete</a>
-          </div>
-        </div>
-      </div>
+    <div class="likes">
+      Total likes: 200
+    </div>
+  </div>
+
+  <div class="blog-cards-container" id="blog-cards-container"></div>
+
+  
 </body>
+  <!-- Modal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Edit Blog Post</h2>
+      <form id="editForm">
+        <label for="editTitle">Title:</label><br>
+        <input type="text" id="editTitle" name="editTitle"><br>
+        <label for="editDate">Date:</label><br>
+        <input type="text" id="editDate" name="editDate"><br>
+        <label for="editPicture">Picture URL:</label><br> 
+        <input type="text" id="editPicture" name="editPicture"><br> 
+        <label for="editDescription">Description:</label><br>
+        <textarea id="editDescription" name="editDescription"></textarea><br>
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </div>
+  <script>
+  
+    document.addEventListener("DOMContentLoaded", function() {
+      // Fetch blogs
+      fetch('http://localhost:3000/api/get/blogs')
+        .then(response => response.json())
+        .then(data => {
+          const blogContainer = document.getElementById('blog-cards-container');
+          data.forEach(blog => {
+            const blogCard = document.createElement('div');
+            blogCard.classList.add('blog-card');
+            blogCard.innerHTML = `
+              
+              <div class="blog-content">
+                <img src="${blog.picture}" alt="Blog Picture">
+                <h2>${blog.title}</h2>
+
+                
+              </div>
+              <div class="blog-header">
+                <p>Date: ${blog.date}</p>
+                <p>${blog.description}</p>
+
+              </div>
+            `;
+
+            blogContainer.appendChild(blogCard);
+          });
+        })
+        .catch(error => console.error('Error fetching blogs:', error));
+    });
+ 
+    // Function to update blog cards from local storage
+
+</script>
+
+  </body>
+
 </html>

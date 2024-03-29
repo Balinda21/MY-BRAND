@@ -24,9 +24,7 @@
               <a href="blogs.html">Blog</a>
               <a href="contact.html">Contact</a>
             </nav>            
-            <a href="login.html" class="login_button">
-              Login
-            </a>
+            <a href="#" id="login-btn" class="login_button">Login</a>
             <button id="nav-toggle" class="nav-btn">
               <i class="fa fa-bars"></i>
             </button>
@@ -40,7 +38,7 @@
     developer from Rwanda.</h3>
     <div class="hero-btns">
         <button class="hire-btn">Hire me</button>
-        <button class="portfolio-btn">Portfolio</button>
+        <a href="projects.html"><button class="portfolio-btn">Portfolio</button></a>
     </div>
     <div class="socials">
         <i class="fa-solid fa-basketball"></i>
@@ -133,36 +131,74 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const loginButton = document.getElementById("login-btn");
+    
+            if (loginButton) {
+                const token = localStorage.getItem("token");
+    
+                if (token) {
+                    // If token is present, user is logged in
+                    loginButton.textContent = "Logout";
+                    loginButton.addEventListener("click", function() {
+                        // Clear token from localStorage
+                        localStorage.removeItem("token");
+                        // Redirect to login page
+                        window.location.href = "login.html";
+                    });
+                } else {
+                    // If token is not present, user is not logged in
+                    loginButton.textContent = "Login";
+                    loginButton.href = "login.html"; // Update href attribute with login page URL
+                }
+            } else {
+                console.error("Login button not found!");
+            }
+        });
+    </script>
+ <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const logoutButton = document.getElementById("login-btn");
+
+        if (logoutButton) {
+            logoutButton.addEventListener("click", async function() {
+                try {
+                    const response = await fetch("http://localhost:3000/logout", {
+                        method: "POST",
+                        credentials: "include" // Include cookies in the request
+                    });
+
+                    if (response.ok) {
+                        // If logout is successful, redirect to the login page
+                        window.location.href = "login.html";
+                    } else {
+                        // Handle error
+                        console.error("Logout failed:", response.statusText);
+                    }
+                } catch (error) {
+                    console.error("Error during logout:", error.message);
+                }
+            });
+        } else {
+            console.error("Logout button not found!");
+        }
+       
+    });
+</script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var navToggle = document.getElementById("nav-toggle");
+            var navMenu = document.querySelector(".nav");
+      
+            navToggle.addEventListener("click", function() {
+                navMenu.classList.toggle("active");
+            });
+        });
+    </script>
+    
 </body>
 </html>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var scrollButton = document.querySelector(".scroll-btn");
-  
-    window.addEventListener("scroll", function() {
-      if (window.scrollY > 300) {
-        scrollButton.style.display = "block";
-      } else {
-        scrollButton.style.display = "none";
-      }
-    });
-  
-    scrollButton.addEventListener("click", function() {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    });
-  });
-</script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-      var navToggle = document.getElementById("nav-toggle");
-      var navMenu = document.querySelector(".nav");
-
-      navToggle.addEventListener("click", function() {
-          navMenu.classList.toggle("active");
-      });
-  });
-</script>

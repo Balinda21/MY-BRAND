@@ -26,7 +26,7 @@
               <a href="blogs.html">Blog</a>
               <a href="contact.html">Contact</a>
             </nav>            
-            <a href="login.html" class="login_button">
+            <a href="login.html" class="login_button" id="login-btn">
               Login
             </a>
             <button id="nav-toggle" class="nav-btn">
@@ -132,4 +132,59 @@
             navMenu.classList.toggle("active");
         });
     });
+  </script>
+ <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginButton = document.getElementById("login-btn");
+  
+        if (loginButton) {
+            const token = localStorage.getItem("token");
+  
+            if (token) {
+                // If token is present, user is logged in
+                loginButton.textContent = "Logout";
+                loginButton.addEventListener("click", function() {
+                    // Clear token from localStorage
+                    localStorage.removeItem("token");
+                    // Redirect to login page
+                    window.location.href = "login.html";
+                });
+            } else {
+                // If token is not present, user is not logged in
+                loginButton.textContent = "Login";
+                loginButton.href = "login.html"; // Update href attribute with login page URL
+            }
+        } else {
+            console.error("Login button not found!");
+        }
+    });
+  </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const logoutButton = document.getElementById("login-btn");
+  
+    if (logoutButton) {
+        logoutButton.addEventListener("click", async function() {
+            try {
+                const response = await fetch("http://localhost:3000/logout", {
+                    method: "POST",
+                    credentials: "include" // Include cookies in the request
+                });
+  
+                if (response.ok) {
+                    // If logout is successful, redirect to the login page
+                    window.location.href = "login.html";
+                } else {
+                    // Handle error
+                    console.error("Logout failed:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error during logout:", error.message);
+            }
+        });
+    } else {
+        console.error("Logout button not found!");
+    }
+   
+  });
   </script>
