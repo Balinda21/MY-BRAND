@@ -20,12 +20,11 @@
         <nav class="nav">
           <a href="index.html">Home</a>
           <a href="about.html">About</a>
-          <a href="#Services">Services</a>
           <a href="projects.html">Projects</a>
           <a href="blogs.html">Blog</a>
           <a href="contact.html">Contact</a>
         </nav>            
-        <a href="login.html" class="login_button">
+        <a href="login.html" class="login_button" id="login-btn">
           Login
         </a>
         <button id="nav-toggle" class="nav-btn">
@@ -97,48 +96,27 @@
       navToggle.addEventListener("click", function() {
           navMenu.classList.toggle("active");
       });
-
-      var form = document.querySelector("form");
-      form.addEventListener("submit", function(event) {
-          event.preventDefault();
-
-          var name = document.querySelector("input[name='name']").value;
-          var email = document.querySelector("input[name='email']").value;
-          var subject = document.querySelector("input[name='subject']").value;
-          var message = document.querySelector("textarea[name='message']").value;
-
-          var contactData = {
-              name: name,
-              email: email,
-              subject: subject,
-              message: message
-          };
-
-          localStorage.setItem("contactData", JSON.stringify(contactData));
-          alert('Submitted');
-          form.reset();
-
-          
-      });
   });
   
 </script>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-      const loginButton = document.querySelector(".login_button");
+      const loginButton = document.getElementById("login-btn");
 
       if (loginButton) {
-          const isLoggedIn = localStorage.getItem("isLoggedIn");
+          const token = localStorage.getItem("token");
 
-          if (isLoggedIn === "true") {
-              // If user is logged in, show logout button
+          if (token) {
+              // If token is present, user is logged in
               loginButton.textContent = "Logout";
               loginButton.addEventListener("click", function() {
-                  localStorage.setItem("isLoggedIn", "false"); // Set isLoggedIn to false
-                  window.location.href = "login.html"; // Redirect to login page
+                  // Clear token from localStorage
+                  localStorage.removeItem("token");
+                  // Redirect to login page
+                  window.location.href = "login.html";
               });
           } else {
-              // If user is not logged in, show login button
+              // If token is not present, user is not logged in
               loginButton.textContent = "Login";
               loginButton.href = "login.html"; // Update href attribute with login page URL
           }
@@ -146,4 +124,33 @@
           console.error("Login button not found!");
       }
   });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const logoutButton = document.getElementById("login-btn");
+
+  if (logoutButton) {
+      logoutButton.addEventListener("click", async function() {
+          try {
+              const response = await fetch("http://localhost:3000/logout", {
+                  method: "POST",
+                  credentials: "include" // Include cookies in the request
+              });
+
+              if (response.ok) {
+                  // If logout is successful, redirect to the login page
+                  window.location.href = "login.html";
+              } else {
+                  // Handle error
+                  console.error("Logout failed:", response.statusText);
+              }
+          } catch (error) {
+              console.error("Error during logout:", error.message);
+          }
+      });
+  } else {
+      console.error("Logout button not found!");
+  }
+ 
+});
 </script>
