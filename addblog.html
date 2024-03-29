@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Blog</title>
+  <title>Add Article</title>
   <link rel="stylesheet" href="addblog.css">
 </head>
 <body>
@@ -73,6 +73,7 @@
     })
     .then(data => {
       console.log('Blog added successfully:', data);
+      alert('Article Added Successfully')
       // Reset form
       document.getElementById('blog-form').reset();
       // Update blog cards if needed
