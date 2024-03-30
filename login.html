@@ -116,7 +116,9 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email: email, password: password })
+                    body: JSON.stringify({ email: email, password: password }),
+                    credentials:"include"
+
                 });
 
                 const data = await response.json();
@@ -125,8 +127,6 @@
                     const token = data.token;
                     console.log('Token:', token);
 
-                    // Store token in localStorage
-                    localStorage.setItem('token', token);
 
                     // Store token in cookies
                     document.cookie = `token=${token}; path=/`;
