@@ -5,73 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="blogs.css">
   <link rel="stylesheet" href="admindashboard.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
-<style>
-  .blog-cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    padding: 20px;
-    padding-left: 8rem;
-    padding-top: 3rem;
-
-}
-
-.blog-card {
-    width: calc(30.33% - 20px); 
-    margin-bottom: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.blog-card:hover {
-    transform: translateY(-5px);
-}
-
-.blog-card img {
-    width: 100%;
-    height: 200px; 
-    object-fit: cover;
-    border-radius: 10px 10px 0 0;
-}
-
-.card-content {
-    padding: 20px;
-}
-.card-date {
-    display: block;
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 10px;
-}
-
-.card-content h2 {
-    font-size: 16px; /* Adjust as needed */
-    margin-bottom: 10px;
-}
-
-.card-content p {
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-.edit-button {
-   
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-   
-}
-
-</style>
 <body>
   <header class="admin-header">
     <div>
@@ -120,7 +58,7 @@
     </div>
   </div>
 
-  
+  <div class="blog-cards-container" id="blog-cards-container"></div>
 
   <!-- Modal -->
   <div id="editModal" class="modal">
@@ -151,28 +89,26 @@
       .then(response => response.json()) // Parse the JSON response
       .then(data => { // Handle the retrieved data
         const blogContainer = document.getElementById('blog-cards-container'); // Get the container for blog cards
-       
+        // Loop through each blog retrieved from the backend
         data.forEach(blog => {
           // Create a new div element for the blog card
           const blogCard = document.createElement('div');
           blogCard.classList.add('blog-card'); // Add the CSS class for styling
-          
+         
+          // Populate the blog card with HTML content, including the blog title, picture, date, and description
           blogCard.innerHTML = `
-        
-          <div class="blog-card">
-            <img src="${blog.picture}" alt="Blog Image">
-            <div class="card-content">
-                <h2>${blog.title}</h2>
-                <span class="card-date">${blog.date}</span>
-                <p>${blog.description}</p>
-                <div class="blog-actions"> 
-              <button class="edit-button" data-id="${blog.id}">Edit</button> 
-              <button class="delete-button" data-id="${blog.id}">Delete</button> 
+            <div class="blog-content">
+              <img src="${blog.picture}" alt="Blog Picture">
+              <h2>${blog.title}</h2>
             </div>
+            <div class="blog-header">
+              <p class="card-date">Date: ${blog.date}</p>
+              <p>${blog.description}</p>
             </div>
+            <div class="blog-actions"> 
+              <button class="edit-button" data-id="${blog.id}">Edit</button> <!-- Add an edit button with data-id attribute containing blog ID -->
+              <button class="delete-button" data-id="${blog.id}">Delete</button> <!-- Add a delete button with data-id attribute containing blog ID -->
             </div>
-            
-       
           `;
           blogContainer.appendChild(blogCard); // Append the blog card to the container
         });
