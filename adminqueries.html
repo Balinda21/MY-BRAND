@@ -39,7 +39,6 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
         th, td {
             border: 1px solid #ccc;
@@ -50,74 +49,53 @@
             background-color: #f9f9f9;
             font-weight: bold;
         }
-        .query {
-            margin-bottom: 20px;
-        }
-        .query-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .name {
-            font-weight: bold;
-            color: green;
-        }
-        .email {
-            color: #666;
-        }
-        .title {
-            font-weight: bold;
-            color: #333;
-        }
-        .description {
-            color: #666;
-            margin-top: 5px;
-        }
-        .question {
-            margin-top: 10px;
-            color: #333;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header-options">
-            <h1>Queries</h1>
-            <a href="admindashboard.html">Exit</a>
+            <h1>Queries </h1>
+            <a href="admindashboard.html">exit</a>
         </div>
-        
-        <table>
+        <table id="queryTable">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Subject</th> 
+                    <th>Subject</th>
                     <th>Message</th>
                 </tr>
             </thead>
-            <tbody id="queries-container"></tbody>
+            <tbody>
+               
+            </tbody>
         </table>
+
     </div>
-
-    <script>
-         document.addEventListener("DOMContentLoaded", function() {
-            const contactData = JSON.parse(localStorage.getItem('contactData'));
-            const tbody = document.getElementById('queries-container');
-
-            if (contactData) {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${contactData.name}</td>
-                    <td>${contactData.email}</td>
-                    <td>${contactData.subject}</td>
-                    <td>${contactData.message}</td>
-                `;
-                tbody.appendChild(row);
-            } else {
-                tbody.innerHTML = '<tr><td colspan="4">No queries available</td></tr>';
-            }
-        });
-    </script>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        var contactData = localStorage.getItem('contactData');
+        if (contactData) {
+            contactData = JSON.parse(contactData);
+            displayContactData(contactData);
+        }
+    });
+
+  
+    function displayContactData(contactData) {
+        var tableBody = document.querySelector('#queryTable tbody');
+
+        var newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>${contactData.name}</td>
+            <td>${contactData.email}</td>
+            <td>${contactData.subject}</td>
+            <td>${contactData.message}</td>
+        `;
+
+        tableBody.appendChild(newRow);
+    }
+</script>
 </html>

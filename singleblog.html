@@ -79,7 +79,6 @@
         }
 
         /* Style for comment form */
-        .comment-form input,
         .comment-form textarea,
         .comment-form button {
             width: 100%;
@@ -104,8 +103,12 @@
             background-color: #0056b3;
         }
         .liked {
-    filter: invert(37%) sepia(95%) saturate(2526%) hue-rotate(332deg) brightness(101%) contrast(105%);
-}
+            filter: invert(37%) sepia(95%) saturate(2526%) hue-rotate(332deg) brightness(101%) contrast(105%);
+        }
+
+        .login-required {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -142,17 +145,14 @@
                 <p>AI is a tool created and controlled by humans. While AI technologies continue to advance rapidly and play </p>
                 <div class="like-comment-section">
                     <i><img id="likeIcon" src="./images/heart.png" alt="" style="width: 20px; cursor: pointer;" onclick="like()"></i>
-                   
-                    
+                    <span id="likeCount">0</span>
                 </div>
                 <!-- Comment section -->
                 <div class="comment-section">
-                    <h3>Leave a Comments</h3>
-                    
-                    
+                    <h3>Comments</h3>
+                    <div class="comments"></div>
                     <!-- Add comment form -->
                     <form class="comment-form">
-                     
                         <textarea placeholder="Your comment"></textarea>
                         <button type="submit">Submit</button>
                     </form>
@@ -173,87 +173,39 @@
             </div>
         </div>
     </footer>
-</body>
-</html>
+    
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var navToggle = document.getElementById("nav-toggle");
-        var navMenu = document.querySelector(".nav");
-  
-        navToggle.addEventListener("click", function() {
-            navMenu.classList.toggle("active");
-        });
+        const loginButton = document.getElementById("login-btn");
+
+        if (loginButton) {
+            const token = getCookie("token");
+
+            if (token) {
+                // If token is present, user is logged in
+                loginButton.textContent = "Logout";
+                loginButton.addEventListener("click", function() {
+                    // Clear token by setting an expired cookie
+                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    // Redirect to login page
+                    window.location.href = "login.html";
+                });
+            } else {
+                // If token is not present, user is not logged in
+                loginButton.textContent = "Login";
+                loginButton.href = "login.html"; // Update href attribute with login page URL
+            }
+        } else {
+            console.error("Login button not found!");
+        }
     });
 
-       document.addEventListener("DOMContentLoaded", function() {
-            // Function to add comment to the UI
-            function addComment(comment) {
-                var commentSection = document.querySelector(".comment-section");
-                var commentDiv = document.createElement("div");
-                commentDiv.classList.add("comment");
-                commentDiv.innerHTML = "<p>" + comment + "</p>";
-                commentSection.appendChild(commentDiv);
-            }
-
-            // Function to handle form submission
-            document.querySelector(".comment-form").addEventListener("submit", function(event) {
-                event.preventDefault();
-                var nameInput = document.querySelector(".comment-form input[type='text']");
-                var commentInput = document.querySelector(".comment-form textarea");
-                var name = nameInput.value.trim();
-                var comment = commentInput.value.trim();
-
-                if (name !== "" && comment !== "") {
-                    var newComment = name + ": " + comment;
-                    addComment(newComment);
-
-                    // Store comment in local storage
-                    var comments = localStorage.getItem("comments");
-                    if (!comments) {
-                        comments = [];
-                    } else {
-                        comments = JSON.parse(comments);
-                    }
-                    comments.push(newComment);
-                    localStorage.setItem("comments", JSON.stringify(comments));
-
-                    // Clear input fields
-                    nameInput.value = "";
-                    commentInput.value = "";
-                } else {
-                    alert("Please fill in all fields.");
-                }
-            });
-
-            // Load comments from local storage
-            var savedComments = localStorage.getItem("comments");
-            if (savedComments) {
-                savedComments = JSON.parse(savedComments);
-                savedComments.forEach(function(comment) {
-                    addComment(comment);
-                });
-            }
-        });
-
-        // Function to handle liking
-function like() {
-    var likeIcon = document.getElementById("likeIcon");
-    
-    // Toggle color class
-    likeIcon.classList.toggle("liked");
-    
-    // Store like state in local storage
-    var liked = likeIcon.classList.contains("liked");
-    localStorage.setItem("liked", liked);
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Restore like state from local storage
-    var liked = localStorage.getItem("liked");
-    var likeIcon = document.getElementById("likeIcon");
-
-    if (liked === "true") {
-        likeIcon.classList.add("liked");
+    // Function to get cookie by name
+    function getCookie(name) {
+        const cookies = document.cookie.split(";")
+            .map(cookie => cookie.trim().split("="))
+            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+        return cookies[name];
     }
-});
-  </script>
+</script>
+=
