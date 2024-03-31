@@ -74,87 +74,97 @@
         <input type="text" id="editPicture" name="editPicture"><br> 
         <label for="editDescription">Description:</label><br>
         <textarea id="editDescription" name="editDescription"></textarea><br>
-        <button type="submit">Save Changes</button>
+        <button type="submit" class="edit-submit-btn">Save Changes</button>
       </form>
     </div>
   </div>
 
-  </body>
-</html>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Fetch blogs from the backend API
-    fetch('https://portfolio-backend-cy9p.onrender.com/api/get/blogs')
-      .then(response => response.json()) // Parse the JSON response
-      .then(data => { // Handle the retrieved data
-        const blogContainer = document.getElementById('blog-cards-container'); // Get the container for blog cards
-        // Loop through each blog retrieved from the backend
-        data.forEach(blog => {
-          // Create a new div element for the blog card
-          const blogCard = document.createElement('div');
-          blogCard.classList.add('blog-card'); // Add the CSS class for styling
-         
-          // Populate the blog card with HTML content, including the blog title, picture, date, and description
-          blogCard.innerHTML = `
-            <div class="blog-content">
-              <img src="${blog.picture}" alt="Blog Picture">
-              <h2>${blog.title}</h2>
-            </div>
-            <div class="blog-header">
-              <p class="card-date">Date: ${blog.date}</p>
-              <p>${blog.description}</p>
-            </div>
-            <div class="blog-actions"> 
-              <button class="edit-button" data-id="${blog.id}">Edit</button> <!-- Add an edit button with data-id attribute containing blog ID -->
-              <button class="delete-button" data-id="${blog.id}">Delete</button> <!-- Add a delete button with data-id attribute containing blog ID -->
-            </div>
-          `;
-          blogContainer.appendChild(blogCard); // Append the blog card to the container
-        });
-
-        // Add event listeners for edit and delete buttons
-        blogContainer.addEventListener('click', async function(event) {
-          // Check if the clicked element is an edit button
-          if (event.target.classList.contains('edit-button')) {
-            const blogId = event.target.dataset.id; // Get the blog ID from the data-id attribute
-            const modal = document.getElementById('editModal'); // Get the edit modal
-            const closeBtn = modal.querySelector('.close'); // Get the close button inside the modal
-
-            // Open the edit modal
-            modal.style.display = 'block';
-
-            // Close the modal when the close button is clicked
-            closeBtn.addEventListener('click', function() {
-              modal.style.display = 'none';
-            });
-
-            // Close the modal when clicking outside the modal content
-            window.addEventListener('click', function(event) {
-              if (event.target == modal) {
-                modal.style.display = 'none';
-              }
-            });
-          } else if (event.target.classList.contains('delete-button')) { // Check if the clicked element is a delete button
-            const blogId = event.target.dataset.id; // Get the blog ID from the data-id attribute
-            try {
-              const response = await fetch(`https://portfolio-backend-cy9p.onrender.com/api/blogs/delete/${blogId}`, {
-                method: 'DELETE' // Send a DELETE request to the backend API to delete the blog
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Fetch blogs
+      fetch('https://portfolio-backend-cy9p.onrender.com/api/get/blogs')
+          .then(response => response.json())
+          .then(data => {
+              const blogContainer = document.getElementById('blog-cards-container');
+              data.forEach(blog => {
+                  const blogCard = document.createElement('div');
+                  blogCard.classList.add('blog-card');
+                  blogCard.innerHTML = `
+                      <div class="blog-content">
+                          <img src="${blog.picture}" alt="Blog Picture">
+                          <h2>${blog.title}</h2>
+                      </div>
+                      <div class="blog-header">
+                          <p>Date: ${blog.date}</p>
+                          <p>${blog.description}</p>
+                      </div>
+                      <div class="blog-actions">
+                          <button class="edit-btn" data-id="${blog.id}"><i class="far fa-edit"></i> Edit</button>
+                          <button class="delete-btn" data-id="${blog.id}"><i class="far fa-trash-alt"></i> Delete</button>
+                      </div>
+                  `;
+                  blogContainer.appendChild(blogCard);
               });
-              if (response.ok) {
-                // Remove the deleted blog card from the DOM
-                event.target.closest('.blog-card').remove();
-                alert('Blog deleted successfully!');
-              } else {
-                alert('Failed to delete blog. Please try again later.');
-              }
-            } catch (error) {
-              console.error('Error deleting blog:', error);
-              alert('An error occurred while deleting the blog. Please try again later.');
-            }
-          }
-        });
-      })
-      .catch(error => console.error('Error fetching blogs:', error)); // Log any errors that occur during the fetch operation
-  });
-</script>
+
+              // Add event listeners for edit and delete buttons
+              blogContainer.addEventListener('click', async function(event) {
+                  if (event.target.classList.contains('edit-btn')) {
+                      const blogId = event.target.dataset.id;
+                      try {
+                          // Fetch the details of the blog by ID
+                          const response = await fetch(`https://portfolio-backend-cy9p.onrender.com/api/blogs/${blogId}`);
+                          if (response.ok) {
+                              const blogData = await response.json();
+                              // Populate the edit form fields with the fetched information
+                              document.getElementById('editTitle').value = blogData.title;
+                              document.getElementById('editDate').value = blogData.date;
+                              document.getElementById('editPicture').value = blogData.picture;
+                              document.getElementById('editDescription').value = blogData.description;
+                              // Display the edit modal
+                              document.getElementById('editModal').style.display = 'block';
+                              // Add event listener for edit form submission
+                              document.getElementById('editForm').addEventListener('submit', async function(event) {
+                                  event.preventDefault();
+                                  const editedBlog = {
+                                      title: document.getElementById('editTitle').value,
+                                      date: document.getElementById('editDate').value,
+                                      picture: document.getElementById('editPicture').value,
+                                      description: document.getElementById('editDescription').value
+                                  };
+                                  try {
+                                      const editResponse = await fetch(`https://portfolio-backend-cy9p.onrender.com/api/blogs/edit/${blogId}`, {
+                                          method: 'PUT',
+                                          headers: {
+                                              'Content-Type': 'application/json'
+                                          },
+                                          body: JSON.stringify(editedBlog)
+                                      });
+                                      if (editResponse.ok) {
+                                          alert('Blog edited successfully!');
+                                          // Reload the page to reflect the changes
+                                          location.reload();
+                                      } else {
+                                          alert('Failed to edit blog. Please try again later.');
+                                      }
+                                  } catch (error) {
+                                      console.error('Error editing blog:', error);
+                                      alert('An error occurred while editing the blog. Please try again later.');
+                                  }
+                              });
+                          } else {
+                              alert('Failed to fetch blog details. Please try again later.');
+                          }
+                      } catch (error) {
+                          console.error('Error fetching blog details:', error);
+                          alert('An error occurred while fetching blog details. Please try again later.');
+                      }
+                  } else if (event.target.classList.contains('delete-btn')) {
+                      // Delete blog logic
+                  }
+              });
+          })
+          .catch(error => console.error('Error fetching blogs:', error));
+    });
+  </script>
+</body>
+</html>
