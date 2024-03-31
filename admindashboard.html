@@ -96,6 +96,7 @@
           blogCard.classList.add('blog-card'); // Add the CSS class for styling
           
           blogCard.innerHTML = `
+          <div class="blog-cards-container">
           <div class="blog-card">
             <img src="${blog.picture}" alt="Blog Image">
             <div class="card-content">
@@ -107,6 +108,7 @@
               <button class="delete-button" data-id="${blog.id}">Delete</button> 
             </div>
             </div>
+        </div>
         </div>
           `;
           blogContainer.appendChild(blogCard); // Append the blog card to the container
