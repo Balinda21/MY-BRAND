@@ -84,7 +84,7 @@
   
     document.addEventListener("DOMContentLoaded", function() {
       // Fetch blogs
-      fetch('http://localhost:3000/api/get/blogs')
+      fetch('https://portfolio-backend-cy9p.onrender.com/api/get/blogs')
         .then(response => response.json())
         .then(data => {
           const blogContainer = document.getElementById('blog-cards-container');
