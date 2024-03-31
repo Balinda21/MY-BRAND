@@ -81,32 +81,36 @@
 
   </body>
 </html>
+
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  // Fetch blogs
-  fetch('https://portfolio-backend-cy9p.onrender.com/api/get/blogs')
-      .then(response => response.json())
-      .then(data => {
-          const blogContainer = document.getElementById('blog-cards-container');
-          data.forEach(blog => {
-              const blogCard = document.createElement('div');
-              blogCard.classList.add('blog-card');
-              blogCard.innerHTML = `
-                  <div class="blog-content">
-                      <img src="${blog.picture}" alt="Blog Picture">
-                      <h3>${blog.title}</h3>
-                  </div>
-                  <div class="blog-header">
-                      <span>Date: ${blog.date}</span>
-                      <p>${blog.description}</p>
-                  </div>
-                  <div class="blog-actions">
-                      <button class="edit-button" data-id="${blog.id}"><i class="far fa-edit"></i> Edit</button>
-                      <button class="delete-button" data-id="${blog.id}"><i class="far fa-trash-alt"></i> Delete</button>
-                  </div>
-              `;
-              blogContainer.appendChild(blogCard);
-          });
+  document.addEventListener("DOMContentLoaded", function() {
+    // Fetch blogs from the backend API
+    fetch('https://portfolio-backend-cy9p.onrender.com/api/get/blogs')
+      .then(response => response.json()) // Parse the JSON response
+      .then(data => { // Handle the retrieved data
+        const blogContainer = document.getElementById('blog-cards-container'); // Get the container for blog cards
+        // Loop through each blog retrieved from the backend
+        data.forEach(blog => {
+          // Create a new div element for the blog card
+          const blogCard = document.createElement('div');
+          blogCard.classList.add('blog-card'); // Add the CSS class for styling
+          // Populate the blog card with HTML content, including the blog title, picture, date, and description
+          blogCard.innerHTML = `
+            <div class="blog-content">
+              <img src="${blog.picture}" alt="Blog Picture">
+              <h2>${blog.title}</h2>
+            </div>
+            <div class="blog-header">
+              <p>Date: ${blog.date}</p>
+              <p>${blog.description}</p>
+            </div>
+            <div class="blog-actions"> <!-- Add a section for blog actions (edit and delete) -->
+              <button class="edit-button" data-id="${blog.id}">Edit</button> <!-- Add an edit button with data-id attribute containing blog ID -->
+              <button class="delete-button" data-id="${blog.id}">Delete</button> <!-- Add a delete button with data-id attribute containing blog ID -->
+            </div>
+          `;
+          blogContainer.appendChild(blogCard); // Append the blog card to the container
+        });
 
         // Add event listeners for edit and delete buttons
         blogContainer.addEventListener('click', async function(event) {
