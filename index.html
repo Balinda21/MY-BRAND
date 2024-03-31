@@ -134,61 +134,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const loginButton = document.getElementById("login-btn");
-    
-            if (loginButton) {
-                const token = localStorage.getItem("token");
-    
-                if (token) {
-                    // If token is present, user is logged in
-                    loginButton.textContent = "Logout";
-                    loginButton.addEventListener("click", function() {
-                        // Clear token from localStorage
-                        localStorage.removeItem("token");
-                        // Redirect to login page
-                        window.location.href = "login.html";
-                    });
-                } else {
-                    // If token is not present, user is not logged in
-                    loginButton.textContent = "Login";
-                    loginButton.href = "login.html"; // Update href attribute with login page URL
-                }
-            } else {
-                console.error("Login button not found!");
-            }
-        });
-    </script>
- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const logoutButton = document.getElementById("login-btn");
-
-        if (logoutButton) {
-            logoutButton.addEventListener("click", async function() {
-                try {
-                    const response = await fetch("http://localhost:3000/logout", {
-                        method: "POST",
-                        credentials: "include" // Include cookies in the request
-                    });
-
-                    if (response.ok) {
-                        // If logout is successful, redirect to the login page
-                        window.location.href = "login.html";
-                    } else {
-                        // Handle error
-                        console.error("Logout failed:", response.statusText);
-                    }
-                } catch (error) {
-                    console.error("Error during logout:", error.message);
-                }
-            });
-        } else {
-            console.error("Logout button not found!");
-        }
-       
-    });
-</script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
             var navToggle = document.getElementById("nav-toggle");
             var navMenu = document.querySelector(".nav");
       
@@ -197,6 +142,41 @@
             });
         });
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginButton = document.getElementById("login-btn");
+
+        if (loginButton) {
+            const token = getCookie("token");
+
+            if (token) {
+                // If token is present, user is logged in
+                loginButton.textContent = "Logout";
+                loginButton.addEventListener("click", function() {
+                    // Clear token by setting an expired cookie
+                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    // Redirect to login page
+                    window.location.href = "login.html";
+                });
+            } else {
+                // If token is not present, user is not logged in
+                loginButton.textContent = "Login";
+                loginButton.href = "login.html"; // Update href attribute with login page URL
+            }
+        } else {
+            console.error("Login button not found!");
+        }
+    });
+
+    // Function to get cookie by name
+    function getCookie(name) {
+        const cookies = document.cookie.split(";")
+            .map(cookie => cookie.trim().split("="))
+            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+        return cookies[name];
+    }
+</script>
     
 </body>
 </html>
