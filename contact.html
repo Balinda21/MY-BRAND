@@ -81,6 +81,35 @@
 </html>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
+    const contactForm = document.getElementById("contact-form");
+
+    contactForm.addEventListener("submit", async function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const formData = new FormData(contactForm); // Get form data
+      const url = 'https://portfolio-backend-cy9p.onrender.com/submit-contact-form'; // Endpoint URL
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          body: formData
+        });
+
+        if (response.ok) {
+          alert("Form submitted successfully!");
+          contactForm.reset(); // Clear form fields on successful submission
+        } else {
+          alert("Failed to submit form. Please try again later.");
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("An error occurred. Please try again later.");
+      }
+    });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
       var navToggle = document.getElementById("nav-toggle");
       var navMenu = document.querySelector(".nav");
 
@@ -124,33 +153,4 @@
           console.error("Login button not found!");
       }
   });
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const logoutButton = document.getElementById("login-btn");
-
-  if (logoutButton) {
-      logoutButton.addEventListener("click", async function() {
-          try {
-              const response = await fetch("http://localhost:3000/logout", {
-                  method: "POST",
-                  credentials: "include" // Include cookies in the request
-              });
-
-              if (response.ok) {
-                  // If logout is successful, redirect to the login page
-                  window.location.href = "login.html";
-              } else {
-                  // Handle error
-                  console.error("Logout failed:", response.statusText);
-              }
-          } catch (error) {
-              console.error("Error during logout:", error.message);
-          }
-      });
-  } else {
-      console.error("Logout button not found!");
-  }
- 
-});
 </script>
