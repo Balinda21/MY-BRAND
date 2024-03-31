@@ -86,27 +86,51 @@
     contactForm.addEventListener("submit", async function(event) {
       event.preventDefault(); // Prevent default form submission
 
-      const formData = new FormData(contactForm); // Get form data
-      const url = 'https://portfolio-backend-cy9p.onrender.com/submit-contact-form'; // Endpoint URL
-
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          body: formData
-        });
-
-        if (response.ok) {
-          alert("Form submitted successfully!");
-          contactForm.reset(); // Clear form fields on successful submission
-        } else {
-          alert("Failed to submit form. Please try again later.");
-        }
-      } catch (error) {
-        console.error("Error submitting form:", error);
-        alert("An error occurred. Please try again later.");
+      const isLoggedIn = checkLoginStatus(); // Check if the user is logged in
+      if (isLoggedIn) {
+        // If the user is logged in, submit the form
+        submitForm(contactForm);
+      } else {
+        // If the user is not logged in, show alert
+        alert("Please log in first to submit the form.");
       }
     });
   });
+
+  async function submitForm(form) {
+    const formData = new FormData(form); // Get form data
+    const url = 'https://portfolio-backend-cy9p.onrender.com/submit-contact-form'; // Endpoint URL
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: formData
+      });
+
+      if (response.ok) {
+        alert("Form submitted successfully!");
+        form.reset(); // Clear form fields on successful submission
+      } else {
+        alert("Failed to submit form. Please try again later.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred. Please try again later.");
+    }
+  }
+
+  function checkLoginStatus() {
+    const token = getCookie("token");
+    return !!token; // Returns true if token exists, indicating user is logged in
+  }
+
+  // Function to get cookie by name
+  function getCookie(name) {
+    const cookies = document.cookie.split(";")
+      .map(cookie => cookie.trim().split("="))
+      .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+    return cookies[name];
+  }
 </script>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
