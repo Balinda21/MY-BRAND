@@ -201,7 +201,7 @@ label #cancel{
     visibility: visible;
   }
 }
-@media(max-width : 860px){
+/* @media(max-width : 860px){
   .card-holder{
     display: grid;
     grid-template-columns: 1fr;
@@ -224,13 +224,8 @@ label #cancel{
   .blog-card{
     width: 90%;
   }
-}
-.blog-header{
-  padding: 20px;
-}
-.blog-actions{
-  padding: 20px;
-}
+} */
+
 
 
  /* Modal */
