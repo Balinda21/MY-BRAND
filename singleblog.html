@@ -176,125 +176,38 @@
             </div>
         </div>
     </footer>
-    <script>
-        var likeCount = 0;
+    
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const loginButton = document.getElementById("login-btn");
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const loginButton = document.querySelector(".login_button");
-      
-            if (loginButton) {
-                const isLoggedIn = localStorage.getItem("isLoggedIn");
-      
-                if (isLoggedIn === "true") {
-                    // If user is logged in, show logout button
-                    loginButton.textContent = "Logout";
-                    loginButton.addEventListener("click", function() {
-                        localStorage.setItem("isLoggedIn", "false"); // Set isLoggedIn to false
-                        window.location.href = "login.html"; // Redirect to login page
-                    });
-                } else {
-                    // If user is not logged in, show login button
-                    loginButton.textContent = "Login";
-                    loginButton.href = "login.html"; // Update href attribute with login page URL
-                }
+        if (loginButton) {
+            const token = getCookie("token");
+
+            if (token) {
+                // If token is present, user is logged in
+                loginButton.textContent = "Logout";
+                loginButton.addEventListener("click", function() {
+                    // Clear token by setting an expired cookie
+                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    // Redirect to login page
+                    window.location.href = "login.html";
+                });
             } else {
-                console.error("Login button not found!");
+                // If token is not present, user is not logged in
+                loginButton.textContent = "Login";
+                loginButton.href = "login.html"; // Update href attribute with login page URL
             }
-        });
-
-        // Function to handle form submission
-        document.querySelector(".comment-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            var commentInput = document.querySelector(".comment-form textarea");
-            var comment = commentInput.value.trim();
-
-            if (comment !== "") {
-                var newComment = comment;
-
-                // Add username to comment if logged in
-                var username = localStorage.getItem("username");
-                if (username) {
-                    newComment = username + ": " + newComment;
-                }
-
-                addComment(newComment);
-
-                // Store comment in local storage
-                var comments = localStorage.getItem("comments");
-                if (!comments) {
-                    comments = [];
-                } else {
-                    comments = JSON.parse(comments);
-                }
-                comments.push(newComment);
-                localStorage.setItem("comments", JSON.stringify(comments));
-
-                // Clear input field
-                commentInput.value = "";
-            } else {
-                alert("Please fill in the comment field.");
-            }
-        });
-
-        // Load comments from local storage
-        var savedComments = localStorage.getItem("comments");
-        if (savedComments) {
-            savedComments = JSON.parse(savedComments);
-            savedComments.forEach(function(comment) {
-                addComment(comment);
-            });
-        }
-
-        // Function to handle liking
-        function like() {
-            var likeIcon = document.getElementById("likeIcon");
-
-            // Toggle color class
-            likeIcon.classList.toggle("liked");
-
-            // Increment or decrement like count based on current state
-            if (likeIcon.classList.contains("liked")) {
-                likeCount++;
-            } else {
-                likeCount--;
-            }
-
-            // Update like count in UI
-            document.getElementById("likeCount").textContent = likeCount;
-
-            // Store like count in local storage
-            localStorage.setItem("likeCount", likeCount);
-        }
-
-        // Restore like count from local storage
-        var storedLikeCount = localStorage.getItem("likeCount");
-        if (storedLikeCount) {
-            likeCount = parseInt(storedLikeCount);
-            document.getElementById("likeCount").textContent = likeCount;
-        }
-
-        const isLoggedIn = localStorage.getItem("isLoggedIn");
-        const commentSectionContainer = document.querySelector(".comment-section");
-        const loginRequiredMessage = document.querySelector(".login-required");
-
-        if (isLoggedIn === "true") {
-            // If user is logged in, show comment form
-            commentSectionContainer.style.display = "block";
-            loginRequiredMessage.style.display = "none";
         } else {
-            // If user is not logged in, hide comment form and show login required message
-            commentSectionContainer.style.display = "none";
-            loginRequiredMessage.style.display = "block";
+            console.error("Login button not found!");
         }
+    });
 
-        // Function to add comment to the UI
-        function addComment(comment) {
-            var commentsContainer = document.querySelector(".comments");
-            var commentDiv = document.createElement("div");
-            commentDiv.classList.add("comment");
-            commentDiv.innerHTML = "<p>" + comment + "</p>";
-            commentsContainer.appendChild(commentDiv);
-        }
-    </script>
-</body>
-</html>
+    // Function to get cookie by name
+    function getCookie(name) {
+        const cookies = document.cookie.split(";")
+            .map(cookie => cookie.trim().split("="))
+            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+        return cookies[name];
+    }
+</script>
