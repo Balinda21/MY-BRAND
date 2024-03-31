@@ -152,7 +152,7 @@
       .then(response => response.json()) // Parse the JSON response
       .then(data => { // Handle the retrieved data
         const blogContainer = document.getElementById('blog-cards-container'); // Get the container for blog cards
-        // Loop through each blog retrieved from the backend
+       
         data.forEach(blog => {
           // Create a new div element for the blog card
           const blogCard = document.createElement('div');
