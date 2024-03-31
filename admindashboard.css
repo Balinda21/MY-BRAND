@@ -225,6 +225,9 @@ label #cancel{
     width: 90%;
   }
 }
+.blog-header{
+  padding: 20px;
+}
 
 
  /* Modal */
