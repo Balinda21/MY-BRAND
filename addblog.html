@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Blog</title>
+  <title>Add Article</title>
   <link rel="stylesheet" href="addblog.css">
 </head>
 <body>
@@ -41,13 +41,12 @@
 
 <div id="blog-cards" class="blog-cards"></div>
 
-<script>
-  // Function to generate a unique ID
-  function generateUniqueId() {
-    return 'blog_' + Date.now(); // Example: blog_1649203846593
-  }
 
-  // Function to handle form submission
+
+</body>
+</html>
+<script>
+  // Function to handle form submissions
   document.getElementById('blog-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -58,67 +57,36 @@
       blogData[key] = value;
     });
 
-    // Add a unique ID to the blog
-    blogData.id = generateUniqueId();
-
-    // Store form data in local storage
-    var blogs = localStorage.getItem('blogs') ? JSON.parse(localStorage.getItem('blogs')) : [];
-    blogs.push(blogData);
-    localStorage.setItem('blogs', JSON.stringify(blogs));
-
-    // Reset form
-    this.reset();
-
-    // Update blog cards
-    updateBlogCards();
+    // Make a POST request to the API endpoint
+    fetch('http://localhost:3000/api/blogs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(blogData),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to add blog');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Blog added successfully:', data);
+      alert('Article Added Successfully')
+      // Reset form
+      document.getElementById('blog-form').reset();
+      // Update blog cards if needed
+      // updateBlogCards(); // Uncomment this if you want to update blog cards after adding a new blog
+    })
+    .catch(error => {
+      console.error('Error adding blog:', error);
+      // Handle error
+    });
   });
 
-  // Function to generate HTML for blog post cards
-  function generateBlogCard(blog) {
-    var card = document.createElement('div');
-    card.classList.add('blog-card');
-    card.setAttribute('data-blog-id', blog.id); // Set data attribute for blog ID
-
-    var image = document.createElement('img');
-    image.src = blog.picture; // Use the provided image link
-    image.alt = 'Blog Picture';
-    card.appendChild(image);
-
-    var content = document.createElement('div');
-    content.classList.add('card-content');
-
-    var title = document.createElement('h2');
-    title.textContent = blog.title;
-    content.appendChild(title);
-
-    var date = document.createElement('span');
-    date.classList.add('card-date');
-    date.textContent = blog.date;
-    content.appendChild(date);
-
-    var description = document.createElement('p');
-    description.textContent = blog.description;
-    content.appendChild(description);
-
-    card.appendChild(content);
-
-    document.getElementById('blog-cards').appendChild(card);
-  }
-
-  // Function to update blog cards from local storage
-  function updateBlogCards() {
-    var blogCardsContainer = document.getElementById('blog-cards');
-    blogCardsContainer.innerHTML = '';
-
-    var blogs = localStorage.getItem('blogs') ? JSON.parse(localStorage.getItem('blogs')) : [];
-    blogs.forEach(function(blog) {
-      generateBlogCard(blog);
-    });
-  }
-
-  // Call updateBlogCards initially to load existing blogs
-  updateBlogCards();
 </script>
 
-</body>
-</html>
+
+
+
