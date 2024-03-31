@@ -94,20 +94,20 @@
           // Create a new div element for the blog card
           const blogCard = document.createElement('div');
           blogCard.classList.add('blog-card'); // Add the CSS class for styling
-          // Populate the blog card with HTML content, including the blog title, picture, date, and description
+          
           blogCard.innerHTML = `
-            <div class="blog-content">
-              <img src="${blog.picture}" alt="Blog Picture">
-              <h2>${blog.title}</h2>
+          <div class="blog-card">
+            <img src="${blog.picture}" alt="Blog Image">
+            <div class="card-content">
+                <h2>${blog.title}</h2>
+                <span class="card-date">${blog.date}</span>
+                <p>${blog.description}</p>
+                <div class="blog-actions"> 
+              <button class="edit-button" data-id="${blog.id}">Edit</button> 
+              <button class="delete-button" data-id="${blog.id}">Delete</button> 
             </div>
-            <div class="blog-header">
-              <p>Date: ${blog.date}</p>
-              <p>${blog.description}</p>
             </div>
-            <div class="blog-actions"> <!-- Add a section for blog actions (edit and delete) -->
-              <button class="edit-button" data-id="${blog.id}">Edit</button> <!-- Add an edit button with data-id attribute containing blog ID -->
-              <button class="delete-button" data-id="${blog.id}">Delete</button> <!-- Add a delete button with data-id attribute containing blog ID -->
-            </div>
+        </div>
           `;
           blogContainer.appendChild(blogCard); // Append the blog card to the container
         });
