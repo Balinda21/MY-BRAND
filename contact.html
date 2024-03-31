@@ -119,18 +119,7 @@
     }
   }
 
-  function checkLoginStatus() {
-    const token = getCookie("token");
-    return !!token; // Returns true if token exists, indicating user is logged in
-  }
-
-  // Function to get cookie by name
-  function getCookie(name) {
-    const cookies = document.cookie.split(";")
-      .map(cookie => cookie.trim().split("="))
-      .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-    return cookies[name];
-  }
+ 
 </script>
 
 
