@@ -177,6 +177,7 @@
     document.addEventListener("DOMContentLoaded", function() {
     const loginButton = document.getElementById("login-btn");
     const commentForm = document.querySelector(".comment-form");
+    const commentContainer = document.querySelector(".comments");
 
     if (loginButton) {
         const token = getCookie("token");
@@ -217,6 +218,17 @@
                         });
 
                         if (response.ok) {
+                            // Retrieve user's name from the token
+                            const userName = parseToken(token).name;
+                            
+                            // Create a new comment element
+                            const newComment = document.createElement("div");
+                            newComment.classList.add("comment");
+                            newComment.innerHTML = `<strong>${userName}</strong>: ${commentText}`;
+                            
+                            // Append the new comment to the comments container
+                            commentContainer.appendChild(newComment);
+
                             alert("Comment submitted successfully!");
                             commentForm.reset(); // Clear form fields on successful submission
                         } else {
@@ -247,5 +259,16 @@ function getCookie(name) {
         .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
     return cookies[name];
 }
+
+// Function to parse JWT token and extract user information
+function parseToken(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+}
+
 
     </script>
