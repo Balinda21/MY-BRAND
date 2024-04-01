@@ -73,50 +73,49 @@
     </div>
   </div>
 </footer>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.getElementById('contact-form');
-
-    contactForm.addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent default form submission
-
-      const token = document.cookie.split(';').find((cookie) => cookie.trim().startsWith('token='));
-
-      if (token) {
-        // User is logged in, submit the form
-        submitForm(contactForm);
-      } else {
-        // User is not logged in, display a message asking them to login first
-        alert('Please login first to submit the form.');
-      }
-    });
-
-    function submitForm(form) {
-      fetch('https://portfolio-backend-cy9p.onrender.com/submit-contact-form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: form.name.value,
-          email: form.email.value,
-          subject: form.subject.value,
-          message: form.message.value,
-        }),
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data);
-        // Handle success message or redirect if needed
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        // Handle error message if needed
-      });
-    }
-  });
-</script>
-
 </body>
 </html>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contact-form');
+
+  contactForm.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const token = document.cookie.split(';').find((cookie) => cookie.trim().startsWith('token='));
+
+    if (token) {
+      // User is logged in, submit the form
+      submitForm(contactForm);
+    } else {
+      // User is not logged in, display a message asking them to login first
+      alert('Please login first to submit the form.');
+    }
+  });
+
+  function submitForm(form) {
+    fetch('https://portfolio-backend-cy9p.onrender.com/submit-contact-form', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: form.name.value,
+        email: form.email.value,
+        subject: form.subject.value,
+        message: form.message.value,
+      }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Success:', data);
+      // Handle success message or redirect if needed
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      // Handle error message if needed
+    });
+  }
+});
+
+</script>
