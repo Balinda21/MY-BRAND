@@ -149,15 +149,15 @@
 
         if (loginButton) {
             const token = getCookie("token");
-            const user_name = getCookie("user_name");
+            const username = getCookie("username");
 
             if (token) {
                 // If token is present, user is logged in
                 loginButton.textContent = "Logout";
                 loginButton.addEventListener("click", function() {
-                    // Clear token by setting an expired cookie
+                    // Clear token and username by setting expired cookies
                     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    document.cookie = "user_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     // Redirect to login page
                     window.location.href = "login.html";
                 });
@@ -172,9 +172,10 @@
     });
 
     // Function to get cookie by name
-   
-    
+    function getCookie(name) {
+        const cookies = document.cookie.split(";")
+            .map(cookie => cookie.trim().split("="))
+            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+        return cookies[name];
+    }
 </script>
-    
-</body>
-</html>
