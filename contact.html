@@ -108,14 +108,6 @@
     contactForm.addEventListener("submit", async function(event) {
       event.preventDefault(); // Prevent default form submission
 
-      const isLoggedIn = checkLoginStatus(); // Check if the user is logged in
-      if (isLoggedIn) {
-        // If the user is logged in, submit the form
-        submitForm(contactForm);
-      } else {
-        // If the user is not logged in, show alert
-        alert("Please log in first to submit the form.");
-      }
     });
   });
 
