@@ -149,16 +149,23 @@
 
         if (loginButton) {
             const token = getCookie("token");
+            const userName = getCookie("user_name");
 
             if (token) {
                 // If token is present, user is logged in
                 loginButton.textContent = "Logout";
                 loginButton.addEventListener("click", function() {
-                    // Clear token by setting an expired cookie
+                    // Clear token and user_name cookies
                     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "user_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     // Redirect to login page
                     window.location.href = "login.html";
                 });
+
+                // Display username
+                const userNameElement = document.createElement("span");
+                userNameElement.textContent = `Welcome, ${userName}`;
+                loginButton.parentNode.insertBefore(userNameElement, loginButton.nextSibling);
             } else {
                 // If token is not present, user is not logged in
                 loginButton.textContent = "Login";
