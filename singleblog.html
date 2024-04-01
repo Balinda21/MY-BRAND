@@ -181,37 +181,25 @@
 
     if (loginButton) {
         const token = getCookie("token");
+        const userName = getCookie("user_name"); // Retrieve the user's name from the cookie
 
-        if (token) {
-            // If token is present, user is logged in
+        if (token && userName) {
+            // If token and user name are present, user is logged in
             loginButton.textContent = "Logout";
             loginButton.addEventListener("click", function() {
-                // Clear token by setting an expired cookie
+                // Clear token and user name by setting expired cookies
                 document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "user_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 // Redirect to login page
                 window.location.href = "login.html";
             });
 
-            // Fetch the user's name from the backend
-            try {
-                const response = await fetch("https://portfolio-backend-cy9p.onrender.com/api/user", {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                });
-                const userData = await response.json();
-                const userName = userData.name;
-
-                // Display the user's name
-                const userNameElement = document.createElement("p");
-                userNameElement.textContent = `Logged in as: ${userName}`;
-                commentForm.parentNode.insertBefore(userNameElement, commentForm.nextSibling);
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
+            // Display the user's name
+            const userNameElement = document.createElement("p");
+            userNameElement.textContent = `Logged in as: ${userName}`;
+            commentForm.parentNode.insertBefore(userNameElement, commentForm.nextSibling);
         } else {
-            // If token is not present, user is not logged in
+            // If token or user name is not present, user is not logged in
             loginButton.textContent = "Login";
             loginButton.href = "login.html"; // Update href attribute with login page URL
         }
@@ -267,6 +255,14 @@
         commentElement.classList.add("comment");
         commentElement.textContent = commentText;
         commentsContainer.appendChild(commentElement);
+    }
+
+    // Function to get cookie by name
+    function getCookie(name) {
+        const cookies = document.cookie.split(";")
+            .map(cookie => cookie.trim().split("="))
+            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+        return cookies[name];
     }
 });
 
