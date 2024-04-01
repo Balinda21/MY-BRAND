@@ -81,106 +81,34 @@
 </html>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var navToggle = document.getElementById("nav-toggle");
-    var navMenu = document.querySelector(".nav");
+  const token = document.cookie.split(';').find((cookie) => cookie.trim().startsWith('token='));
 
-    navToggle.addEventListener("click", function() {
-      navMenu.classList.toggle("active");
-    });
+if (token) {
+  // User is logged in, submit the form
+  document.getElementById('contact-form').submit();
+} else {
+  // User is not logged in, display a message asking them to login first
+  alert('Please login first to submit the form.');
+}
+
+  fetch('https://portfolio-backend-cy9p.onrender.com/submit-contact-form', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    name: 'John Doe',
+    email: 'johndoe@example.com',
+    subject: 'Hello',
+    message: 'This is a test message',
+  }),
+})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log('Success:', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
   });
 
-  document.addEventListener("DOMContentLoaded", function() {
-    var navToggle = document.getElementById("nav-toggle");
-    var navMenu = document.querySelector(".nav");
-
-    navToggle.addEventListener("click", function() {
-      navMenu.classList.toggle("active");
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", function() {
-    const contactForm = document.getElementById("contact-form");
-
-    contactForm.addEventListener("submit", async function(event) {
-      event.preventDefault(); // Prevent default form submission
-
-      const isLoggedIn = checkLoginStatus(); // Check if the user is logged in
-      if (isLoggedIn) {
-        // If the user is logged in, submit the form
-        submitForm(contactForm);
-      } else {
-        // If the user is not logged in, show alert
-        alert("Please log in first to submit the form.");
-      }
-    });
-  });
-
-  async function submitForm(form) {
-    const formData = new FormData(form); // Get form data
-    const url = 'https://portfolio-backend-cy9p.onrender.com/submit-contact-form'; // Endpoint URL
-
-    try {
-      const token = getCookie("token");
-      console.log("Token:", token); // Log the retrieved token
-
-      const response = await fetch(url, {
-        method: "POST",
-        body: formData,
-        headers: {
-          'Authorization': `Bearer ${token}`, // Include the token in the request headers
-        }
-      });
-
-      console.log("Response:", response); // Log the response from the server
-
-      if (response.ok) {
-        alert("Form submitted successfully!");
-        form.reset(); // Clear form fields on successful submission
-      } else {
-        alert("Failed to submit form. Please try again later.");
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("An error occurred. Please try again later.");
-    }
-  }
-
-  function checkLoginStatus() {
-    const token = getCookie("token");
-    return !!token; // Returns true if token exists, indicating user is logged in
-  }
-
-  // Function to get cookie by name
-  function getCookie(name) {
-    const cookies = document.cookie.split(";")
-      .map(cookie => cookie.trim().split("="))
-      .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-    return cookies[name];
-  }
-
-  document.addEventListener("DOMContentLoaded", function() {
-    const loginButton = document.getElementById("login-btn");
-
-    if (loginButton) {
-      const token = getCookie("token");
-
-      if (token) {
-        // If token is present, user is logged in
-        loginButton.textContent = "Logout";
-        loginButton.addEventListener("click", function() {
-          // Clear token by setting an expired cookie
-          document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          // Redirect to login page
-          window.location.href = "login.html";
-        });
-      } else {
-        // If token is not present, user is not logged in
-        loginButton.textContent = "Login";
-        loginButton.href = "login.html"; // Update href attribute with login page URL
-      }
-    } else {
-      console.error("Login button not found!");
-    }
-  });
 </script>
