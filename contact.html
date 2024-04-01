@@ -81,7 +81,66 @@
 </html>
 
 <script>
-  // Define the checkLoginStatus function first
+  document.addEventListener("DOMContentLoaded", function() {
+      var navToggle = document.getElementById("nav-toggle");
+      var navMenu = document.querySelector(".nav");
+
+      navToggle.addEventListener("click", function() {
+          navMenu.classList.toggle("active");
+      });
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+      var navToggle = document.getElementById("nav-toggle");
+      var navMenu = document.querySelector(".nav");
+
+      navToggle.addEventListener("click", function() {
+          navMenu.classList.toggle("active");
+      });
+  });
+  
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const contactForm = document.getElementById("contact-form");
+
+    contactForm.addEventListener("submit", async function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const isLoggedIn = checkLoginStatus(); // Check if the user is logged in
+      if (isLoggedIn) {
+        // If the user is logged in, submit the form
+        submitForm(contactForm);
+      } else {
+        // If the user is not logged in, show alert
+        alert("Please log in first to submit the form.");
+      }
+    });
+  });
+
+  async function submitForm(form) {
+    const formData = new FormData(form); // Get form data
+    const url = 'https://portfolio-backend-cy9p.onrender.com/submit-contact-form'; // Endpoint URL
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: formData
+      });
+
+      if (response.ok) {
+        alert("Form submitted successfully!");
+        form.reset(); // Clear form fields on successful submission
+      } else {
+        alert("Failed to submit form. Please try again later.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred. Please try again later.");
+    }
+  }
+
   function checkLoginStatus() {
     const token = getCookie("token");
     return !!token; // Returns true if token exists, indicating user is logged in
@@ -93,66 +152,6 @@
       .map(cookie => cookie.trim().split("="))
       .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
     return cookies[name];
-  }
-</script>
-
-<!-- Other scripts -->
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-      var navToggle = document.getElementById("nav-toggle");
-      var navMenu = document.querySelector(".nav");
-
-      navToggle.addEventListener("click", function() {
-          navMenu.classList.toggle("active");
-      });
-  });
-
-  // Other scripts...
-
-  document.addEventListener("DOMContentLoaded", function() {
-    const contactForm = document.getElementById("contact-form");
-
-    contactForm.addEventListener("submit", async function(event) {
-      event.preventDefault(); // Prevent default form submission
-
-      console.log("Form submission initiated...");
-
-      const isLoggedIn = checkLoginStatus(); // Check if the user is logged in
-      if (isLoggedIn) {
-        // If the user is logged in, submit the form
-        console.log("User is logged in. Submitting form...");
-        submitForm(contactForm);
-      } else {
-        // If the user is not logged in, show alert
-        console.log("User is not logged in.");
-        alert("Please log in first to submit the form.");
-      }
-    });
-  });
-
-  async function submitForm(form) {
-    console.log("Submitting form data...");
-    const formData = new FormData(form); // Get form data
-    const url = 'https://portfolio-backend-cy9p.onrender.com/submit-contact-form'; // Endpoint URL
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        body: formData
-      });
-
-      if (response.ok) {
-        console.log("Form submitted successfully!");
-        alert("Form submitted successfully!");
-        form.reset(); // Clear form fields on successful submission
-      } else {
-        console.log("Failed to submit form. Server returned status:", response.status);
-        alert("Failed to submit form. Please try again later.");
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("An error occurred. Please try again later.");
-    }
   }
 
   document.addEventListener("DOMContentLoaded", function() {
