@@ -12,78 +12,110 @@
 </head>
 <body>
   
-<div class="">
-  <header>
-    <h3 class="farmie">
-      <span class="far">Mau</span>rice.
-    </h3>
-    <nav class="nav">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="projects.html">Projects</a>
-      <a href="blogs.html">Blog</a>
-      <a href="contact.html">Contact</a>
-    </nav>            
-    <a href="login.html" class="login_button" id="login-btn">
-      Login
-    </a>
-    <button id="nav-toggle" class="nav-btn">
-      <i class="fa fa-bars"></i>
-    </button>
-  </header>
-</div>
+    <div class="">
+      <header>
+        <h3 class="farmie">
+          <span class="far">Mau</span>rice.
+        </h3>
+        <nav class="nav">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Projects</a>
+          <a href="blogs.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </nav>            
+        <a href="login.html" class="login_button" id="login-btn">
+          Login
+        </a>
+        <button id="nav-toggle" class="nav-btn">
+          <i class="fa fa-bars"></i>
+        </button>
+        
+      </header>
+      </div>
+  
+      <div class="hero_section">      
+        <h3>CONTACT US</h3>
+      
+         </div>
+  <main>
+    <section class="contact-form">
+      <h2>Get in Touch</h2>
+      <form id="contact-form">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="text" name="subject" placeholder="Subject" required>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </section>
 
-<div class="hero_section">      
-  <h3>CONTACT US</h3>
-</div>
-
-<main>
-  <section class="contact-form">
-    <h2>Get in Touch</h2>
-    <form id="contact-form">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <input type="text" name="subject" placeholder="Subject" required>
-      <textarea name="message" placeholder="Your Message" required></textarea>
-      <button type="submit">Send</button>
-    </form>
-  </section>
-
-  <section class="contact-info">
-    <h2>Contact Information</h2>
-    <ul>
-      <li>Email: balindamoris@.com</li>
-      <li>Phone: +250786114827</li>
-      <li>Address: kk 318 Street, kigali, Rwanda</li>
-    </ul>
-    <div class="social-links">
-      <a href="#" class="social-icon"><i class="fa fa-facebook"></i></a>
-      <a href="#" class="social-icon"><i class="fa fa-twitter"></i></a>
-      <a href="#" class="social-icon"><i class="fa fa-instagram"></i></a>
+    <section class="contact-info">
+      <h2>Contact Information</h2>
+      <ul>
+        <li>Email: balindamoris@.com</li>
+        <li>Phone: +250786114827</li>
+        <li>Address: kk 318 Street, kigali, Rwanda</li>
+      </ul>
+      <div class="social-links">
+        <a href="#" class="social-icon"><i class="fa fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="fa fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fa fa-instagram"></i></a>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="footer-content">
+        <div class="email">
+            <p>balindamoris@gmail.com</p>
+        </div>
+        <div class="social-media">
+            <a href="#" class="social-icon"><i class="fa fa-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="fa fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fa fa-instagram"></i></a>
+        </div>
     </div>
-  </section>
-</main>
-
-<footer class="footer">
-  <div class="footer-content">
-      <div class="email">
-          <p>balindamoris@gmail.com</p>
-      </div>
-      <div class="social-media">
-          <a href="#" class="social-icon"><i class="fa fa-facebook"></i></a>
-          <a href="#" class="social-icon"><i class="fa fa-twitter"></i></a>
-          <a href="#" class="social-icon"><i class="fa fa-instagram"></i></a>
-      </div>
-  </div>
 </footer>
+ 
+</body>
+</html>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    var navToggle = document.getElementById("nav-toggle");
-    var navMenu = document.querySelector(".nav");
+      var navToggle = document.getElementById("nav-toggle");
+      var navMenu = document.querySelector(".nav");
 
-    navToggle.addEventListener("click", function() {
-        navMenu.classList.toggle("active");
+      navToggle.addEventListener("click", function() {
+          navMenu.classList.toggle("active");
+      });
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+      var navToggle = document.getElementById("nav-toggle");
+      var navMenu = document.querySelector(".nav");
+
+      navToggle.addEventListener("click", function() {
+          navMenu.classList.toggle("active");
+      });
+  });
+  
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const contactForm = document.getElementById("contact-form");
+
+    contactForm.addEventListener("submit", async function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const isLoggedIn = checkLoginStatus(); // Check if the user is logged in
+      if (isLoggedIn) {
+        // If the user is logged in, submit the form
+        submitForm(contactForm);
+      } else {
+        // If the user is not logged in, show alert
+        alert("Please log in first to submit the form.");
+      }
     });
   });
 
@@ -108,16 +140,6 @@
       alert("An error occurred. Please try again later.");
     }
   }
-
-  document.addEventListener("DOMContentLoaded", function() {
-    const contactForm = document.getElementById("contact-form");
-
-    contactForm.addEventListener("submit", async function(event) {
-      event.preventDefault(); // Prevent default form submission
-      // Call submitForm function to handle form submission
-      submitForm(contactForm);
-    });
-  });
 
   function checkLoginStatus() {
     const token = getCookie("token");
@@ -157,5 +179,3 @@
     }
   });
 </script>
-</body>
-</html>
