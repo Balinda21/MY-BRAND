@@ -124,11 +124,11 @@
                 if (response.ok) {
                     alert('Login successful!');
                     const token = data.token;
-                    const user_name = data.user_name; // Assuming the username is returned in the response
+                    const userName = data.userName; // Update to match backend naming convention
 
                     // Store token and username in cookies
                     document.cookie = `token=${token}; path=/`;
-                    document.cookie = `user_name=${user_name}; path=/`;
+                    document.cookie = `user_name=${userName}; path=/`; // Update to match backend naming convention
 
                     window.location.href = 'index.html';
                 } else {
@@ -143,6 +143,3 @@
         });
     });
 </script>
-
-</body>
-</html>
