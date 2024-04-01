@@ -173,50 +173,14 @@
             </div>
         </div>
     </footer>
-    
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const loginButton = document.getElementById("login-btn");
-
-        if (loginButton) {
-            const token = getCookie("token");
-
-            if (token) {
-                // If token is present, user is logged in
-                loginButton.textContent = "Logout";
-                loginButton.addEventListener("click", function() {
-                    // Clear token by setting an expired cookie
-                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    // Redirect to login page
-                    window.location.href = "login.html";
-                });
-            } else {
-                // If token is not present, user is not logged in
-                loginButton.textContent = "Login";
-                loginButton.href = "login.html"; // Update href attribute with login page URL
-            }
-        } else {
-            console.error("Login button not found!");
-        }
-    });
-
-    // Function to get cookie by name
-    function getCookie(name) {
-        const cookies = document.cookie.split(";")
-            .map(cookie => cookie.trim().split("="))
-            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-        return cookies[name];
-    }
-</script>
-
-<script>
+    <script>
     document.addEventListener("DOMContentLoaded", function() {
         const loginButton = document.getElementById("login-btn");
         const commentForm = document.querySelector(".comment-form");
-
+    
         if (loginButton) {
             const token = getCookie("token");
-
+    
             if (token) {
                 // If token is present, user is logged in
                 loginButton.textContent = "Logout";
@@ -226,14 +190,14 @@
                     // Redirect to login page
                     window.location.href = "login.html";
                 });
-
+    
                 // Show comment form
                 commentForm.classList.remove("login-required");
                 commentForm.addEventListener("submit", async function(event) {
                     event.preventDefault(); // Prevent default form submission
-
+    
                     const commentText = commentForm.querySelector("textarea").value.trim();
-
+    
                     if (commentText !== "") {
                         try {
                             const response = await fetch("https://portfolio-backend-cy9p.onrender.com/api/comments", {
@@ -243,10 +207,10 @@
                                     "Authorization": `Bearer ${token}`
                                 },
                                 body: JSON.stringify({
-                                    comment: commentText
+                                    text: commentText // Use 'text' instead of 'comment'
                                 })
                             });
-
+    
                             if (response.ok) {
                                 alert("Comment submitted successfully!");
                                 commentForm.reset(); // Clear form fields on successful submission
@@ -265,7 +229,7 @@
                 // If token is not present, user is not logged in
                 loginButton.textContent = "Login";
                 loginButton.href = "login.html"; // Update href attribute with login page URL
-
+    
                 // Add event listener to comment form submit button to show alert
                 commentForm.addEventListener("submit", function(event) {
                     event.preventDefault(); // Prevent default form submission
@@ -276,12 +240,4 @@
             console.error("Login button not found!");
         }
     });
-
-    // Function to get cookie by name
-    function getCookie(name) {
-        const cookies = document.cookie.split(";")
-            .map(cookie => cookie.trim().split("="))
-            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-        return cookies[name];
-    }
-</script>
+    </script>
