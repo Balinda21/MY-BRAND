@@ -174,100 +174,100 @@
         </div>
     </footer>
     <script>
-    document.addEventListener("DOMContentLoaded", async function() {
-        const loginButton = document.getElementById("login-btn");
-        const commentForm = document.querySelector(".comment-form");
-        const commentsContainer = document.querySelector(".comments");
-    
-        if (loginButton) {
-            const token = getCookie("token");
-    
-            if (token) {
-                // If token is present, user is logged in
-                loginButton.textContent = "Logout";
-                loginButton.addEventListener("click", function() {
-                    // Clear token by setting an expired cookie
-                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    // Redirect to login page
-                    window.location.href = "login.html";
+        document.addEventListener("DOMContentLoaded", async function() {
+    const loginButton = document.getElementById("login-btn");
+    const commentForm = document.querySelector(".comment-form");
+    const commentsContainer = document.querySelector(".comments");
+
+    if (loginButton) {
+        const token = getCookie("token");
+
+        if (token) {
+            // If token is present, user is logged in
+            loginButton.textContent = "Logout";
+            loginButton.addEventListener("click", function() {
+                // Clear token by setting an expired cookie
+                document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                // Redirect to login page
+                window.location.href = "login.html";
+            });
+
+            // Fetch the user's name from the backend
+            try {
+                const response = await fetch("https://portfolio-backend-cy9p.onrender.com/api/user", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
                 });
-    
-                // Fetch the user's name from the backend
-                try {
-                    const response = await fetch("https://portfolio-backend-cy9p.onrender.com/api/user", {
-                        method: "GET",
-                        headers: {
-                            "Authorization": `Bearer ${token}`
-                        }
-                    });
-                    const userData = await response.json();
-                    const userName = userData.name;
-    
-                    // Display the user's name
-                    const userNameElement = document.createElement("p");
-                    userNameElement.textContent = `Logged in as: ${userName}`;
-                    commentForm.parentNode.insertBefore(userNameElement, commentForm.nextSibling);
-                } catch (error) {
-                    console.error("Error fetching user data:", error);
-                }
-            } else {
-                // If token is not present, user is not logged in
-                loginButton.textContent = "Login";
-                loginButton.href = "login.html"; // Update href attribute with login page URL
+                const userData = await response.json();
+                const userName = userData.name;
+
+                // Display the user's name
+                const userNameElement = document.createElement("p");
+                userNameElement.textContent = `Logged in as: ${userName}`;
+                commentForm.parentNode.insertBefore(userNameElement, commentForm.nextSibling);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
             }
-            
-            // Add event listener to comment form submit button
-            commentForm.addEventListener("submit", async function(event) {
-                event.preventDefault(); // Prevent default form submission
-    
-                const commentText = commentForm.querySelector("textarea").value.trim();
-    
-                if (commentText !== "") {
-                    if (token) {
-                        try {
-                            const response = await fetch("https://portfolio-backend-cy9p.onrender.com/api/comments", {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Authorization": `Bearer ${token}`
-                                },
-                                body: JSON.stringify({
-                                    text: commentText
-                                })
-                            });
-    
-                            if (response.ok) {
-                                alert("Comment submitted successfully!");
-                                // Display the user's comment
-                                displayComment(commentText);
-                                commentForm.reset(); // Clear form fields on successful submission
-                            } else {
-                                alert("Failed to submit comment. Please try again later.");
-                            }
-                        } catch (error) {
-                            console.error("Error submitting comment:", error);
-                            alert("An error occurred. Please try again later.");
+        } else {
+            // If token is not present, user is not logged in
+            loginButton.textContent = "Login";
+            loginButton.href = "login.html"; // Update href attribute with login page URL
+        }
+        
+        // Add event listener to comment form submit button
+        commentForm.addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const commentText = commentForm.querySelector("textarea").value.trim();
+
+            if (commentText !== "") {
+                if (token) {
+                    try {
+                        const response = await fetch("https://portfolio-backend-cy9p.onrender.com/api/comments", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${token}`
+                            },
+                            body: JSON.stringify({
+                                text: commentText
+                            })
+                        });
+
+                        if (response.ok) {
+                            alert("Comment submitted successfully!");
+                            // Display the user's comment
+                            displayComment(commentText);
+                            commentForm.reset(); // Clear form fields on successful submission
+                        } else {
+                            alert("Failed to submit comment. Please try again later.");
                         }
-                    } else {
-                        alert("Please log in first to submit a comment.");
-                        // Redirect to login page
-                        window.location.href = "login.html";
+                    } catch (error) {
+                        console.error("Error submitting comment:", error);
+                        alert("An error occurred. Please try again later.");
                     }
                 } else {
-                    alert("Please enter a valid comment.");
+                    alert("Please log in first to submit a comment.");
+                    // Redirect to login page
+                    window.location.href = "login.html";
                 }
-            });
-        } else {
-            console.error("Login button not found!");
-        }
-    
-        // Function to display a comment
-        function displayComment(commentText) {
-            const commentElement = document.createElement("div");
-            commentElement.classList.add("comment");
-            commentElement.textContent = commentText;
-            commentsContainer.appendChild(commentElement);
-        }
-    });
+            } else {
+                alert("Please enter a valid comment.");
+            }
+        });
+    } else {
+        console.error("Login button not found!");
+    }
+
+    // Function to display a comment
+    function displayComment(commentText) {
+        const commentElement = document.createElement("div");
+        commentElement.classList.add("comment");
+        commentElement.textContent = commentText;
+        commentsContainer.appendChild(commentElement);
+    }
+});
+
     </script>
-    
