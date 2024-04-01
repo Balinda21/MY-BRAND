@@ -173,115 +173,79 @@
             </div>
         </div>
     </footer>
-    
-<script>
+    <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const loginButton = document.getElementById("login-btn");
+    const loginButton = document.getElementById("login-btn");
+    const commentForm = document.querySelector(".comment-form");
 
-        if (loginButton) {
-            const token = getCookie("token");
+    if (loginButton) {
+        const token = getCookie("token");
 
-            if (token) {
-                // If token is present, user is logged in
-                loginButton.textContent = "Logout";
-                loginButton.addEventListener("click", function() {
-                    // Clear token by setting an expired cookie
-                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    // Redirect to login page
-                    window.location.href = "login.html";
-                });
-            } else {
-                // If token is not present, user is not logged in
-                loginButton.textContent = "Login";
-                loginButton.href = "login.html"; // Update href attribute with login page URL
-            }
+        if (token) {
+            // If token is present, user is logged in
+            loginButton.textContent = "Logout";
+            loginButton.addEventListener("click", function() {
+                // Clear token by setting an expired cookie
+                document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                // Redirect to login page
+                window.location.href = "login.html";
+            });
         } else {
-            console.error("Login button not found!");
+            // If token is not present, user is not logged in
+            loginButton.textContent = "Login";
+            loginButton.href = "login.html"; // Update href attribute with login page URL
         }
-    });
+        
+        // Add event listener to comment form submit button
+        commentForm.addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent default form submission
 
-    // Function to get cookie by name
-    function getCookie(name) {
-        const cookies = document.cookie.split(";")
-            .map(cookie => cookie.trim().split("="))
-            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-        return cookies[name];
-    }
-</script>
+            const commentText = commentForm.querySelector("textarea").value.trim();
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const loginButton = document.getElementById("login-btn");
-        const commentForm = document.querySelector(".comment-form");
+            if (commentText !== "") {
+                if (token) {
+                    try {
+                        const response = await fetch("https://portfolio-backend-cy9p.onrender.com/api/comments", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${token}`
+                            },
+                            body: JSON.stringify({
+                                text: commentText
+                            })
+                        });
 
-        if (loginButton) {
-            const token = getCookie("token");
-
-            if (token) {
-                // If token is present, user is logged in
-                loginButton.textContent = "Logout";
-                loginButton.addEventListener("click", function() {
-                    // Clear token by setting an expired cookie
-                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    // Redirect to login page
-                    window.location.href = "login.html";
-                });
-
-                // Show comment form
-                commentForm.classList.remove("login-required");
-                commentForm.addEventListener("submit", async function(event) {
-                    event.preventDefault(); // Prevent default form submission
-
-                    const commentText = commentForm.querySelector("textarea").value.trim();
-
-                    if (commentText !== "") {
-                        try {
-                            const response = await fetch("https://portfolio-backend-cy9p.onrender.com/api/comments", {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    "Authorization": `Bearer ${token}`
-                                },
-                                body: JSON.stringify({
-                                    comment: commentText
-                                })
-                            });
-
-                            if (response.ok) {
-                                alert("Comment submitted successfully!");
-                                commentForm.reset(); // Clear form fields on successful submission
-                            } else {
-                                alert("Failed to submit comment. Please try again later.");
-                            }
-                        } catch (error) {
-                            console.error("Error submitting comment:", error);
-                            alert("An error occurred. Please try again later.");
+                        if (response.ok) {
+                            alert("Comment submitted successfully!");
+                            commentForm.reset(); // Clear form fields on successful submission
+                        } else {
+                            alert("Failed to submit comment. Please try again later.");
                         }
-                    } else {
-                        alert("Please enter a valid comment.");
+                    } catch (error) {
+                        console.error("Error submitting comment:", error);
+                        alert("An error occurred. Please try again later.");
                     }
-                });
-            } else {
-                // If token is not present, user is not logged in
-                loginButton.textContent = "Login";
-                loginButton.href = "login.html"; // Update href attribute with login page URL
-
-                // Add event listener to comment form submit button to show alert
-                commentForm.addEventListener("submit", function(event) {
-                    event.preventDefault(); // Prevent default form submission
+                } else {
                     alert("Please log in first to submit a comment.");
-                });
+                    // Redirect to login page
+                    window.location.href = "login.html";
+                }
+            } else {
+                alert("Please enter a valid comment.");
             }
-        } else {
-            console.error("Login button not found!");
-        }
-    });
-
-    // Function to get cookie by name
-    function getCookie(name) {
-        const cookies = document.cookie.split(";")
-            .map(cookie => cookie.trim().split("="))
-            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-        return cookies[name];
+        });
+    } else {
+        console.error("Login button not found!");
     }
-</script>
+});
+
+// Function to get cookie by name
+function getCookie(name) {
+    const cookies = document.cookie.split(";")
+        .map(cookie => cookie.trim().split("="))
+        .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+    return cookies[name];
+}
+
+    </script>
