@@ -196,7 +196,7 @@
     
                     // Display the user's name
                     const userNameElement = document.createElement("p");
-                    userNameElement.textContent = `Logged in as: ${userName}`;
+                    // userNameElement.textContent = `Logged in as: ${userName}`;
                     commentForm.parentNode.insertBefore(userNameElement, commentForm.nextSibling);
                 } else {
                     // If token or user name is not present, user is not logged in
@@ -263,7 +263,7 @@
     
             // Function to display a comment
             function displayComment(commentText) {
-                const commentElement = document.createElement("div");
+                const commentElement = document.creFateElement("div");
                 commentElement.classList.add("comment");
                 commentElement.textContent = commentText;
                 commentsContainer.appendChild(commentElement);
