@@ -117,19 +117,18 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ email: email, password: password }),
-                    credentials:"include"
-
+                    credentials: 'include'
                 });
 
                 const data = await response.json();
                 if (response.ok) {
                     alert('Login successful!');
                     const token = data.token;
-                    console.log('Token:', token);
+                    const user_name = data.user_name; // Assuming the username is returned in the response
 
-
-                    // Store token in cookies
+                    // Store token and username in cookies
                     document.cookie = `token=${token}; path=/`;
+                    document.cookie = `user_name=${user_name}; path=/`;
 
                     window.location.href = 'index.html';
                 } else {
@@ -144,7 +143,6 @@
         });
     });
 </script>
-
 
 </body>
 </html>
