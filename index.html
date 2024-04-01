@@ -149,16 +149,20 @@
 
         if (loginButton) {
             const token = getCookie("token");
-            const username = getCookie("username");
 
             if (token) {
                 // If token is present, user is logged in
-                // You can perform any necessary actions here, such as redirecting the user to a logged-in area
-                console.log("User is logged in with token:", token);
-                console.log("Username:", username);
+                loginButton.textContent = "Logout";
+                loginButton.addEventListener("click", function() {
+                    // Clear token by setting an expired cookie
+                    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    // Redirect to login page
+                    window.location.href = "login.html";
+                });
             } else {
                 // If token is not present, user is not logged in
-                console.log("User is not logged in.");
+                loginButton.textContent = "Login";
+                loginButton.href = "login.html"; // Update href attribute with login page URL
             }
         } else {
             console.error("Login button not found!");
