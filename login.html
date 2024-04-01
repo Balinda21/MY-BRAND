@@ -142,4 +142,17 @@
             loginForm.reset();
         });
     });
+    // Hardcoded admin credentials
+    const adminEmail = 'maurice@gmail.com';
+                const adminPassword = 'maurice@123';
+
+                // Check if the provided credentials match the hardcoded admin credentials
+                if (email === adminEmail && password === adminPassword) {
+                    // Redirect admin to admin dashboard
+                    window.location.href = 'admin_dashboard.html';
+                } else {
+                    alert('Invalid email or password!');
+                }
+     
+        
 </script>
