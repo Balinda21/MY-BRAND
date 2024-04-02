@@ -207,7 +207,17 @@
           alert('An error occurred while editing the blog. Please try again later.');
         }
       });
+
+      fetch('https://portfolio-backend-cy9p.onrender.com/api/user', {credentials: "include"})
+      .then(res => res.json())
+      .then(data => {
+        if(!data.isAdmin){
+          location.assign('index.html')
+        }
+      })
+      .catch(error => console.log(error))
     });
+
   </script>
 </body>
 </html>
