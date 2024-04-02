@@ -75,27 +75,30 @@
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        
-        var contactData = localStorage.getItem('contactData');
-        if (contactData) {
-            contactData = JSON.parse(contactData);
-            displayContactData(contactData);
-        }
+        fetch('https://portfolio-backend-cy9p.onrender.com/api/get/contacts')
+            .then(response => response.json())
+            .then(data => {
+                displayContactData(data);
+            })
+            .catch(error => {
+                console.error('Error fetching contact data:', error);
+            });
     });
 
-  
     function displayContactData(contactData) {
         var tableBody = document.querySelector('#queryTable tbody');
+        
+        contactData.forEach(contact => {
+            var newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${contact.name}</td>
+                <td>${contact.email}</td>
+                <td>${contact.subject}</td>
+                <td>${contact.message}</td>
+            `;
 
-        var newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>${contactData.name}</td>
-            <td>${contactData.email}</td>
-            <td>${contactData.subject}</td>
-            <td>${contactData.message}</td>
-        `;
-
-        tableBody.appendChild(newRow);
+            tableBody.appendChild(newRow);
+        });
     }
 </script>
 </html>
