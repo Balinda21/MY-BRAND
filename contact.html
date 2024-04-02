@@ -113,6 +113,9 @@
           const token = getCookie('token');
           if (!token) {
               alert('Please log in to submit the form.');
+              window.location.href = 'login.html';
+
+
               return;
           }
 
