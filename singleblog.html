@@ -269,6 +269,25 @@
         console.error("Login button not found!");
     }
 });
+</script>
 
+<script>
+    let likeCount = 0;
+    let isLiked = false;
 
-    </script>
+    function toggleLike() {
+        const likeIcon = document.getElementById("likeIcon");
+        const likeCountElement = document.getElementById("likeCount");
+
+        if (isLiked) {
+            likeCount--;
+        } else {
+            likeCount++;
+        }
+
+        isLiked = !isLiked;
+
+        likeCountElement.textContent = likeCount;
+        likeIcon.classList.toggle("liked", isLiked);
+    }
+</script>
