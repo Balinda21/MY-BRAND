@@ -208,16 +208,24 @@
         }
       });
 
-      fetch('http://localhost:3000/api/user', {credentials: "include"})
-      .then(res => res.json())
-      .then(data => {
-        if(!data.isAdmin){
-          location.assign('index.html')
-        }
-        console.log(data)
-      })
-      .catch(error => console.log(error))
-    });
+      fetch('https://portfolio-backend-cy9p.onrender.com/api/user', { credentials: 'include' })
+  .then(res => {
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return res.json();
+  })
+  .then(data => {
+    if (!data.isAdmin) {
+      location.assign('index.html');
+    }
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Error fetching user data:', error);
+    // Handle the error, e.g., display a message to the user
+  });
+
 
   </script>
 </body>
