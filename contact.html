@@ -86,28 +86,9 @@
       contactForm.addEventListener('submit', function (event) {
           event.preventDefault();
 
-          // Check if user is logged in
-          if (!isLoggedIn()) {
-              alert('You need to be logged in to submit the form.');
-              return;
-          }
-
           // If logged in, proceed with form submission
           submitForm();
       });
-
-      function isLoggedIn() {
-          // Check if a token is stored in cookies
-          const token = getCookie('token');
-
-          // Return true if token exists (user is logged in), false otherwise
-          return token !== null && token !== '';
-      }
-
-      function getCookie(name) {
-          const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-          return cookieValue ? cookieValue.pop() : null;
-      }
 
       function submitForm() {
           // Get form data
