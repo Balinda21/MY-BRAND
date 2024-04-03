@@ -207,27 +207,41 @@
           alert('An error occurred while editing the blog. Please try again later.');
         }
       });
-
-      fetch('https://portfolio-backend-cy9p.onrender.com/api/user//user_invalid_url', { credentials: "include" })
-  .then(res => {
-    if (!res.ok) {
-      throw new Error('Failed to fetch user data');
-    }
-    return res.json();
-  })
-  .then(data => {
-    if (!data.isAdmin) {
-      location.assign('index.html')
-    }
-    console.log(data);
-  })
-  .catch(error => {
-    console.error('Error fetching user data:', error);
-    alert('An error occurred while fetching user data. Please try again later.');
-  });
-
     });
 
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Function to fetch user data
+      async function fetchUserData() {
+        try {
+          const response = await fetch('https://portfolio-backend-cy9p.onrender.com/api/user', { credentials: "include" });
+          if (response.ok) {
+            const userData = await response.json();
+            // Check if user is admin
+            if (!userData.isAdmin) {
+              // Redirect non-admin users to another page
+              location.assign('index.html');
+            } else {
+              // Display user data
+              const userNameElement = document.getElementById('user-name');
+              const userImageElement = document.getElementById('user-image');
+              userNameElement.textContent = userData.name; // Assuming user's name is available in userData
+              userImageElement.src = userData.profileImage; // Assuming user's profile image URL is available in userData
+            }
+          } else {
+            console.error('Failed to fetch user data');
+            // Handle error
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          // Handle error
+        }
+      }
+
+      // Call the fetchUserData function when the page loads
+      fetchUserData();
+    });
   </script>
 </body>
 </html>
