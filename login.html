@@ -118,10 +118,8 @@
                 });
 
                 const data = await response.json();
-                if (response.ok) {
-                    window.location.href = 'admindashboard.html';
-                } else {
-                    alert('Invalid email or password!');
+                if(data){
+                  location.assign('admindashboard.html')  
                 }
             } catch (error) {
                 console.error('Error during login:', error);
