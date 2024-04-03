@@ -120,19 +120,15 @@
                 const data = await response.json();
                 if (response.ok) {
                     alert('Login successful!');
-                    const token = data.test.token;
-                    const userName = data.test.user_name; // Update to match backend naming convention
+                    const token = data.token;
+                    const userName = data.userName; // Update to match backend naming convention
 
-                     // Set expiration time for the cookies (e.g., 1 day)
-                     const expirationDate = new Date();
-                    expirationDate.setDate(expirationDate.getDate() + 1); // Add 1 day
-                    
-                    // Store token and username in cookies with expiration time
-                    document.cookie = `token=${token}; expires=${expirationDate.toUTCString()}; path=/`;
-                    document.cookie = `user_name=${userName}; expires=${expirationDate.toUTCString()}; path=/`; // Update to match backend naming convention
+                    // Store token and username in cookies
+                    document.cookie = `token=${token}; path=/`;
+                    document.cookie = `user_name=${userName}; path=/`; // Update to match backend naming convention
 
                     window.location.href = 'index.html';
-              } else {
+                } else {
                     alert('Invalid email or password!');
                 }
             } catch (error) {
