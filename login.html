@@ -118,9 +118,18 @@
                 });
 
                 const data = await response.json();
-                if(data){
-                  document.cookies = data.test.token
-                  location.assign('admindashboard.html')  
+                if (response.ok) {
+                    alert('Login successful!');
+                    const token = data.test.token;
+                    const userName = data.test.userName; // Update to match backend naming convention
+
+                    // Store token and username in cookies
+                    document.cookie = `token=${token}; path=/`;
+                    document.cookie = `user_name=${user_name}; path=/`; // Update to match backend naming convention
+
+                    window.location.href = 'admindashboard.html';
+                } else {
+                    alert('Invalid email or password!');
                 }
             } catch (error) {
                 console.error('Error during login:', error);
