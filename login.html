@@ -131,7 +131,7 @@
                     document.cookie = `token=${token}; expires=${expirationDate.toUTCString()}; path=/`;
                     document.cookie = `user_name=${userName}; expires=${expirationDate.toUTCString()}; path=/`; // Update to match backend naming convention
 
-                    window.location.href = 'admindashboard.html';
+                    window.location.href = 'index.html';
               } else {
                     alert('Invalid email or password!');
                 }
