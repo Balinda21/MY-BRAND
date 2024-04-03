@@ -208,56 +208,21 @@
         }
       });
 
-      // fetch('https://portfolio-backend-cy9p.onrender.com/api/user', {credentials: "include"})
-      // .then(res => res.json())
-      // .then(data => {
-      //   if(!data.isAdmin){
-      //     location.assign('index.html')
-      //   }
-      //   console.log(data)
-      // })
-      // .catch(error => console.log(error))
-    });
-
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Function to fetch user data after successful login
-      async function fetchLoggedInUserData() {
-        try {
-          const response = await fetch('https://portfolio-backend-cy9p.onrender.com/api/user', { credentials: "include" });
-          if (response.ok) {
-            const userData = await response.json();
-            console.log(userData); // Log user data in the console
-            if (userData.isAdmin) {
-              console.log('User is an admin');
-              // Perform actions specific to admin user
-            } else {
-              console.log('User is not an admin');
-              // Perform actions specific to non-admin user
-            }
-          } else {
-            console.error('Failed to fetch user data');
-            // Handle error
+      fetch('https://portfolio-backend-cy9p.onrender.com/api/user', { credentials: "include" })
+        .then(res => res.json())
+        .then(userData => {
+          console.log(userData); // Log user data in the console
+          const isAdmin = userData.isAdmin;
+          console.log('User is admin:', isAdmin); // Log user's admin status in the console
+          if (!isAdmin) {
+            // Redirect to index.html or perform actions specific to non-admin users
+            location.assign('index.html');
           }
-        } catch (error) {
-          console.error('Error fetching user data:', error);
-          // Handle error
-        }
-      }
-
-      // Call the fetchLoggedInUserData function after successful login
-      // For demonstration purposes, you can trigger it manually or based on some login event
-      // For example, you can call it after a successful login form submission
-      // Assuming you have a login form with an id "loginForm"
-      document.getElementById('loginForm').addEventListener('submit', async function(event) {
-        event.preventDefault(); // Prevent form submission
-        // Perform login process (send credentials to server, etc.)
-        // Assuming login is successful
-        // Now, fetch user data
-        await fetchLoggedInUserData();
-      });
+        })
+        .catch(error => console.error('Error fetching user data:', error));
     });
+
   </script>
+  
 </body>
 </html>
