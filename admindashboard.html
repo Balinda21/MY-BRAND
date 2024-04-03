@@ -214,7 +214,10 @@
           console.log(userData); // Log user data in the console
           const isAdmin = userData.isAdmin;
           console.log('User is admin:', isAdmin); // Log user's admin status in the console
-         
+          if (!isAdmin) {
+            // Redirect to index.html or perform actions specific to non-admin users
+            location.assign('index.html');
+          }
         })
         .catch(error => console.error('Error fetching user data:', error));
     });
