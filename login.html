@@ -120,12 +120,6 @@
                 const data = await response.json();
                 if (response.ok) {
                     alert('Login successful!');
-                    const token = data.token;
-                    const userName = data.userName; // Update to match backend naming convention
-
-                    // Store token and username in cookies
-                    document.cookie = `token=${token}; path=/`;
-                    document.cookie = `user_name=${userName}; path=/`; // Update to match backend naming convention
 
                     window.location.href = 'admindashboard.html';
                 } else {
