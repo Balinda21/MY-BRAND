@@ -124,8 +124,8 @@
                     const userName = data.test.user_name; // Update to match backend naming convention
 
                     // Store token and username in cookies
-                    document.cookie = `token=${token}; path=/`;
-                    document.cookie = `user_name=${userName}; path=/`; // Update to match backend naming convention
+                    document.cookie = `token=${token}; `;
+                    document.cookie = `user_name=${userName};`; // Update to match backend naming convention
 
                     window.location.href = 'admindashboard.html';
                 } else {
